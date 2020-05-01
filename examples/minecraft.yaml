@@ -1,0 +1,72 @@
+version: 1
+
+metadata:
+  name: Vanilla Minecraft Server
+  version: 1.0.0
+
+plugin: overlord+github://dotstart/Overlord/minecraft-plugin.jar
+
+configuration:
+  version: latest
+
+  'server.properties':
+    # Server Settings
+    'server-ip':
+    'server-port': 25565
+    'motd': Powered by Overlord
+    'max-players': 20
+
+    # Game Mode Settings
+    'gamemode': survival
+    'force-gamemode': false
+    'hardcore': false
+    'pvp': true
+    'difficulty': easy
+
+    # Level Settings
+    'level-type': default
+    'level-name': world
+    'level-seed':
+    'generator-settings':
+    'generate-structures': true
+    'max-world-size': 29999984
+
+    # Game Settings
+    'allow-nether': true
+    'spawn-animals': true
+    'spawn-monsters': true
+    'spawn-npcs': true
+    'resource-pack':
+    'resource-pack-sha1':
+
+    # Query & RCON
+    'enable-query': false
+    'query.port': 25565
+
+    'enable-rcon': false
+    'rcon.port': 25575
+    'rcon.password':
+
+    # Performance Settings
+    'view-distance': 10
+    'max-build-height': 256
+    'player-idle-timeout': 0
+    'network-compression-threshold': 256
+    'max-tick-time': 60000
+    'use-native-transport': false
+
+    # Security Settings
+    'online-mode': true
+    'spawn-protection': 16
+    'white-list': false
+    'enforce-whitelist': false
+    'op-permission-level': 4
+    'function-permission-level': 2
+    'enable-command-block': false
+    'broadcast-console-to-ops': true
+    'broadcast-rcon-to-ops': false
+    'prevent-proxy-connections': false
+    'allow-flight': false
+
+    # Misc
+    'snooper-enabled': true
