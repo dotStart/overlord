@@ -102,8 +102,8 @@ service Agent {
 
 message CallResult {
   bool success = 1;
-  uint32 errorCode = 2;
-  string errorMessage = 3;
+  uint32 error_code = 2;
+  string error_message = 3;
 }
 
 message AgentState {
@@ -125,7 +125,7 @@ message AgentState {
    * This value will remain unset if a plugin blob is transmitted upon provisioning as the agent is
    * not aware of the plugin source.
    */
-  string pluginUri = 3;
+  string plugin_uri = 3;
 }
 
 message StateUpdate {
@@ -143,7 +143,7 @@ message StateUpdate {
     /**
      * Provides a log message which has been written to stdout or stderr by the server instance.
      */
-    string logMessage = 2;
+    string log_message = 2;
   }
 }
 
@@ -164,7 +164,7 @@ message ProvisionRequest {
      * implementation does not have control over the plugin installation process. As such, using
      * the [pluginBlob] parameter is preferred.
      */
-    string pluginUri = 1;
+    string plugin_uri = 1;
 
     /**
      * Defines a full plugin blob which contains an Overlord plugin jar.
@@ -172,7 +172,7 @@ message ProvisionRequest {
      * This parameter circumvents the built-in plugin repository logic and instead places a plugin
      * jar within the machine's temporary storage for the duration of the agent lifetime.
      */
-    bytes pluginBlob = 2;
+    bytes plugin_blob = 2;
   }
 
   /**
@@ -182,7 +182,7 @@ message ProvisionRequest {
    * match the plugin implementation exactly (otherwise mapping may fail as implicit conversion is
    * not yet supported).
    */
-  ConfigurationMap pluginConfiguration = 3;
+  ConfigurationMap plugin_configuration = 3;
 }
 
 message StopRequest {
@@ -205,14 +205,14 @@ message ConfigurationValue {
   string key = 1;
 
   oneof value {
-    double doubleValue = 10;
-    float floatValue = 11;
-    int32 intValue = 12;
-    int64 longValue = 13;
-    bool booleanValue = 14;
-    string stringValue = 15;
-    bytes byteArrayValue = 16;
+    double double_value = 10;
+    float float_value = 11;
+    int32 int_value = 12;
+    int64 long_value = 13;
+    bool boolean_value = 14;
+    string string_value = 15;
+    bytes byte_array_value = 16;
 
-    ConfigurationMap mapValue = 30;
+    ConfigurationMap map_value = 30;
   }
 }
