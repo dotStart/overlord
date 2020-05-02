@@ -27,7 +27,7 @@
     <relativePath>../../pom.xml</relativePath>
   </parent>
 
-  <artifactId>plugin-minecraft</artifactId>
+  <artifactId>server-plugin-minecraft</artifactId>
 
   <name>Overlord (Minecraft Plugin)</name>
 

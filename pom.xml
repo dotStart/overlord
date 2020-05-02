@@ -196,9 +196,10 @@
 
   <modules>
     <module>overlord-shared</module>
+    <module>overlord-plugin-api</module>
 
     <module>overlord-agent</module>
-    <module>plugins/minecraft</module>
-    <module>overlord-plugin-api</module>
+
+    <module>plugins/server-minecraft</module>
   </modules>
 </project>
