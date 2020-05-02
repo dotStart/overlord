@@ -14,12 +14,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tv.dotstart.overlord.plugin.minecraft.manifest.version
+package tv.dotstart.overlord.plugin.server.minecraft.manifest.version
+
+import tv.dotstart.overlord.plugin.server.minecraft.manifest.misc.FileLocation
 
 /**
  * @author [Johannes Donath](mailto:johannesd@torchmind.com)
  * @date 25/04/2020
  */
-data class ReleaseMetadata(
-    val release: String,
-    val snapshot: String)
+data class VersionSpecification(
+    val id: String,
+    val type: ReleaseType,
+    val downloads: Downloads) {
+
+  data class Downloads(
+      val client: FileLocation,
+      val server: FileLocation)
+}

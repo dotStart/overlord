@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tv.dotstart.overlord.plugin.minecraft.util
+package tv.dotstart.overlord.plugin.server.minecraft.util
 
 import com.fasterxml.jackson.module.kotlin.readValue
 import tv.dotstart.overlord.shared.util.createObjectMapper

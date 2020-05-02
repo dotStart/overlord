@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tv.dotstart.overlord.plugin.minecraft.config
+package tv.dotstart.overlord.plugin.server.minecraft.config
 
 import tv.dotstart.overlord.shared.mapping.Named
 

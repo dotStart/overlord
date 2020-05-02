@@ -14,11 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tv.dotstart.overlord.plugin.minecraft.manifest
+package tv.dotstart.overlord.plugin.server.minecraft.manifest
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import tv.dotstart.overlord.plugin.minecraft.manifest.version.ReleaseMetadata
-import tv.dotstart.overlord.plugin.minecraft.util.getEntity
+import tv.dotstart.overlord.plugin.server.minecraft.manifest.version.ReleaseMetadata
+import tv.dotstart.overlord.plugin.server.minecraft.util.getEntity
 import tv.dotstart.overlord.shared.util.createHttpClient
 import java.net.URI
 
@@ -104,6 +104,7 @@ data class VersionManifestIndex(
      * Retrieves the latest version of the version manifest.
      */
     fun getManifest(): VersionManifestIndex = createHttpClient()
-        .getEntity(URI.create(documentUri))
+        .getEntity(URI.create(
+            documentUri))
   }
 }

@@ -14,12 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tv.dotstart.overlord.plugin.minecraft.instance
+package tv.dotstart.overlord.plugin.server.minecraft.instance
 
 import reactor.core.publisher.EmitterProcessor
 import reactor.core.publisher.Flux
 import reactor.core.publisher.ReplayProcessor
-import tv.dotstart.overlord.plugin.minecraft.config.MinecraftPluginConfiguration
+import tv.dotstart.overlord.plugin.server.minecraft.config.MinecraftPluginConfiguration
 import tv.dotstart.overlord.shared.delegate.log
 import tv.dotstart.overlord.plugin.api.server.extensions.Announcing
 import tv.dotstart.overlord.plugin.api.server.extensions.CommandReceiver
@@ -55,7 +55,7 @@ class MinecraftServerInstance(
     private val ctx: ServerFactoryContext,
     private val jarPath: Path,
     private val config: MinecraftPluginConfiguration) : ServerInstance, Announcing,
-                                                        CommandReceiver {
+                                                                                                                               CommandReceiver {
 
   private val aliveProcessor = ReplayProcessor.create<Boolean>(1)
   private val stdoutProcessor = EmitterProcessor.create<String>()

@@ -14,27 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tv.dotstart.overlord.plugin.minecraft.manifest
-
-import com.fasterxml.jackson.annotation.JsonIgnore
-import tv.dotstart.overlord.plugin.minecraft.manifest.version.ReleaseType
-import tv.dotstart.overlord.plugin.minecraft.manifest.version.VersionSpecification
-import tv.dotstart.overlord.plugin.minecraft.util.getEntity
-import tv.dotstart.overlord.shared.util.createHttpClient
-import java.net.URI
+package tv.dotstart.overlord.plugin.server.minecraft.manifest.version
 
 /**
  * @author [Johannes Donath](mailto:johannesd@torchmind.com)
  * @date 25/04/2020
  */
-data class VersionManifest(
-    val id: String,
-    val type: ReleaseType,
-    val url: URI) {
-
-  @get:JsonIgnore
-  val specification: VersionSpecification by lazy {
-    // explicit specification of return type due to compiler bug
-    createHttpClient().getEntity<VersionSpecification>(this.url)
-  }
-}
+data class ReleaseMetadata(
+    val release: String,
+    val snapshot: String)

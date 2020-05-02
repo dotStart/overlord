@@ -14,12 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tv.dotstart.overlord.plugin.minecraft.instance
+package tv.dotstart.overlord.plugin.server.minecraft.instance
 
 import com.fasterxml.jackson.module.kotlin.readValue
-import tv.dotstart.overlord.plugin.minecraft.config.MinecraftPluginConfiguration
-import tv.dotstart.overlord.plugin.minecraft.manifest.VersionManifestIndex
-import tv.dotstart.overlord.plugin.minecraft.manifest.version.VersionSpecification
+import tv.dotstart.overlord.plugin.server.minecraft.config.MinecraftPluginConfiguration
+import tv.dotstart.overlord.plugin.server.minecraft.manifest.VersionManifestIndex
+import tv.dotstart.overlord.plugin.server.minecraft.manifest.version.VersionSpecification
 import tv.dotstart.overlord.shared.delegate.log
 import tv.dotstart.overlord.shared.mapping.toObject
 import tv.dotstart.overlord.plugin.api.server.instance.ServerFactoryContext
@@ -59,7 +59,8 @@ class MinecraftServerInstanceFactory(
       this.downloadArtifact(config.version, jarPath, config.cache.manifestCacheDuration)
     }
 
-    return MinecraftServerInstance(ctx, jarPath, config)
+    return MinecraftServerInstance(
+        ctx, jarPath, config)
   }
 
   private fun downloadArtifact(version: String, targetPath: Path, cacheLifetime: Duration) {

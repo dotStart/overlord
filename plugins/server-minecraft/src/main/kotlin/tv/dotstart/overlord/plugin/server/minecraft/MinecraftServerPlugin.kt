@@ -14,20 +14,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tv.dotstart.overlord.plugin.minecraft.manifest.version
+package tv.dotstart.overlord.plugin.server.minecraft
 
-import tv.dotstart.overlord.plugin.minecraft.manifest.misc.FileLocation
+import tv.dotstart.overlord.plugin.server.minecraft.instance.MinecraftServerInstanceFactory
+import tv.dotstart.overlord.plugin.api.server.ServerPlugin
+import tv.dotstart.overlord.plugin.api.server.instance.ServerFactoryContext
 
 /**
+ * Provides Overlord integration with vanilla Minecraft servers.
+ *
  * @author [Johannes Donath](mailto:johannesd@torchmind.com)
- * @date 25/04/2020
+ * @date 28/04/2020
  */
-data class VersionSpecification(
-    val id: String,
-    val type: ReleaseType,
-    val downloads: Downloads) {
+class MinecraftServerPlugin : ServerPlugin {
 
-  data class Downloads(
-      val client: FileLocation,
-      val server: FileLocation)
+  override val displayName = "Minecraft (Vanilla)"
+  override val version = "0.1.0"
+
+  override val eulaUrls = listOf("https://account.mojang.com/documents/minecraft_eula")
+
+  override fun createInstanceFactory(ctx: ServerFactoryContext) =
+      MinecraftServerInstanceFactory(
+          ctx)
 }

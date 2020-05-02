@@ -14,9 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tv.dotstart.overlord.plugin.minecraft.manifest.misc
+package tv.dotstart.overlord.plugin.server.minecraft.manifest.misc
 
-import tv.dotstart.overlord.plugin.minecraft.util.newRequest
+import tv.dotstart.overlord.plugin.server.minecraft.util.newRequest
 import tv.dotstart.overlord.shared.util.createHttpClient
 import tv.dotstart.overlord.shared.util.fetchTo
 import java.net.URI
@@ -33,7 +33,8 @@ data class FileLocation(
 
   fun fetch(target: Path) {
     createHttpClient().fetchTo(
-        newRequest(this.url).build(),
+        newRequest(this.url)
+            .build(),
         target
     )
   }
