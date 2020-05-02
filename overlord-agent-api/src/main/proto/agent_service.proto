@@ -1,0 +1,184 @@
+syntax = "proto3";
+package agent_api;
+option java_package = "tv.dotstart.overlord.agent.api";
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
+
+service Agent {
+
+  /**
+   * Subscribes to a stream of server state updates.
+   *
+   * Each message within the resulting stream contains basic information on the server such as
+   * whether a process remains alive or a single log message.
+   *
+   * For more information refer to [StateUpdate].
+   */
+  rpc subscribe (google.protobuf.Empty) returns (stream StateUpdate);
+
+  /**
+   * Provisions an agent instance with a server plugin and configuration.
+   *
+   * Once this RPC succeeds, the agent will be "locked" to a given server instance and remain in
+   * this state until its process is restarted.
+   *
+   * As such, agent instances cannot be re-used for different server instances. The supervisor
+   * implementation is expected to completely remove an agent and spawn a new process if a different
+   * server instance shall be started in its place.
+   */
+  rpc provision (ProvisionRequest) returns (CallResult);
+
+  /**
+   * Adjusts the configuration of a provisioned server plugin.
+   *
+   * Note that this endpoint does not typically cause the server to reload its configuration. To
+   * update the configuration values, [reload] must be invoked (or the server restarted if [reload]
+   * is not supported).
+   */
+  rpc reconfigure (ConfigurationMap) returns (CallResult);
+
+  /**
+   * Causes a provisioned server instance to be started.
+   *
+   * This endpoint is also available if a server instance has been stopped or killed prior to this
+   * RPC.
+   */
+  rpc start (google.protobuf.Empty) returns (CallResult);
+
+  /**
+   * Requests a graceful server shutdown.
+   *
+   * This request will block until the server instance has either gracefully shut down (e.g. its
+   * process has exited) or the given timeout has been exceeded (in which case the agent will
+   * respond with an error code indicating such failure).
+   */
+  rpc stop (StopRequest) returns (CallResult);
+
+  /**
+   * Requests a forceful server shutdown.
+   *
+   * Warning: This RPC may cause loss of data or save data corruption and should only ever be
+   * invoked as a last resort in order to shut down the agent in a sensible way.
+   */
+  rpc kill (google.protobuf.Empty) returns (CallResult);
+
+  /**
+   * Executes a server command.
+   *
+   * Note: This endpoint is not supported by all server plugins. Refer to the respective server
+   * plugin documentation for more information.
+   */
+  rpc executeCommand (google.protobuf.StringValue) returns (CallResult);
+
+  /**
+   * Sends a server-wide announcement to all players.
+   *
+   * Note: This endpoint is not supported by all server plugins. Refer to the respective server
+   * plugin documentation for more information.
+   */
+  rpc announce (google.protobuf.StringValue) returns (CallResult);
+
+  /**
+   * Reloads the server configuration from disk.
+   *
+   * Note: This endpoint is not supported by all server plugins. Refers to the respective server
+   * plugin documentation for more information.
+   */
+  rpc reload (google.protobuf.Empty) returns (CallResult);
+}
+
+message CallResult {
+  bool success = 1;
+  uint32 errorCode = 2;
+  string errorMessage = 3;
+}
+
+message StateUpdate {
+  oneof update {
+
+    /**
+     * Identifies whether the server has entered a started or shut down state (e.g. whether its
+     * process is alive or not).
+     *
+     * Note: This flag does not provide a health check and is thus unaware of the reachability of
+     * the server upon completion.
+     */
+    bool alive = 1;
+
+    /**
+     * Provides a log message which has been written to stdout or stderr by the server instance.
+     */
+    string logMessage = 2;
+  }
+}
+
+message ProvisionRequest {
+
+  /**
+   * Defines the plugin which maintains the desired server instance for the duration of the agent
+   * lifetime.
+   */
+  oneof plugin {
+
+    /**
+     * Defines a standard Overlord plugin URI from which the server plugin shall be fetched
+     * autonomously.
+     *
+     * Note: The set of available repository plugins depends on the agent Class-Path and startup
+     * parameters. Great care should be taken when using this parameter as the supervising
+     * implementation does not have control over the plugin installation process. As such, using
+     * the [pluginBlob] parameter is preferred.
+     */
+    string pluginUri = 1;
+
+    /**
+     * Defines a full plugin blob which contains an Overlord plugin jar.
+     *
+     * This parameter circumvents the built-in plugin repository logic and instead places a plugin
+     * jar within the machine's temporary storage for the duration of the agent lifetime.
+     */
+    bytes pluginBlob = 2;
+  }
+
+  /**
+   * Provides various parameters which will be passed directly to the server plugin instance.
+   *
+   * Note: These values will be converted directly to their respective JVM counter parts and must
+   * match the plugin implementation exactly (otherwise mapping may fail as implicit conversion is
+   * not yet supported).
+   */
+  ConfigurationMap pluginConfiguration = 3;
+}
+
+message StopRequest {
+
+  /**
+   * Specifies the maximum amount of time (in milliseconds) that a server may take to shut down
+   * before the call is marked failed.
+   *
+   * Note: This value on its own will only adjust the timeout for the RPC itself. As such, callers
+   * are expected to invoke the kill endpoint when appropriate.
+   */
+  uint64 timeout = 1;
+}
+
+message ConfigurationMap {
+  repeated ConfigurationValue pairs = 1;
+}
+
+message ConfigurationValue {
+  string key = 1;
+
+  oneof value {
+    double doubleValue = 10;
+    float floatValue = 11;
+    int32 intValue = 12;
+    int64 longValue = 13;
+    bool booleanValue = 14;
+    string stringValue = 15;
+    bytes byteArrayValue = 16;
+
+    ConfigurationMap mapValue = 30;
+  }
+}
