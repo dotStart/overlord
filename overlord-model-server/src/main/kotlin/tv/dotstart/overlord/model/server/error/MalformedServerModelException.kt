@@ -20,5 +20,8 @@ package tv.dotstart.overlord.model.server.error
  * @author [Johannes Donath](mailto:johannesd@torchmind.com)
  * @date 21/04/2020
  */
-abstract class ServerDefinitionException(message: String?, cause: Throwable?) :
-    Exception(message, cause)
+class MalformedServerModelException(message: String? = null, cause: Throwable? = null) :
+    ServerModelException(message, cause) {
+
+  constructor(cause: Throwable) : this(null, cause)
+}

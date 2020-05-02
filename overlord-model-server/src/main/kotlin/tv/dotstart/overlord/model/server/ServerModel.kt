@@ -16,7 +16,7 @@
  */
 package tv.dotstart.overlord.model.server
 
-import tv.dotstart.overlord.model.server.error.UnsupportedServerDefinitionException
+import tv.dotstart.overlord.model.server.error.UnsupportedServerModelException
 import tv.dotstart.overlord.shared.mapping.converter.Convert
 import tv.dotstart.overlord.shared.mapping.converter.StringToURIConverter
 import tv.dotstart.overlord.shared.mapping.toObject
@@ -29,7 +29,7 @@ import org.snakeyaml.engine.v2.api.LoadSettings as YamlLoaderSettings
  * @author [Johannes Donath](mailto:johannesd@torchmind.com)
  * @date 21/04/2020
  */
-data class ServerDefinition(
+data class ServerModel(
 
     /**
      * Identifies the model revision.
@@ -43,7 +43,7 @@ data class ServerDefinition(
     /**
      * Provides identifying information.
      */
-    val metadata: ServerDefinitionMetadata,
+    val metadata: ServerModelMetadata,
 
     /**
      * Describes the location from which the server plugin may be loaded.
@@ -65,7 +65,7 @@ data class ServerDefinition(
     /**
      * Decodes a given human readable server definition.
      */
-    fun load(reader: Reader): ServerDefinition {
+    fun load(reader: Reader): ServerModel {
       val settings = YamlLoaderSettings.builder()
           .build()
       val loader = YamlLoader(settings);
@@ -83,7 +83,7 @@ data class ServerDefinition(
             .max()
             ?: 0
 
-        throw UnsupportedServerDefinitionException(
+        throw UnsupportedServerModelException(
             maxVersion,
             "Unsupported definition revision: $maxVersion")
       }

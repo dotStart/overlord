@@ -22,7 +22,7 @@ package tv.dotstart.overlord.model.server
  * @author [Johannes Donath](mailto:johannesd@torchmind.com)
  * @date 21/04/2020
  */
-data class ServerDefinitionMetadata(
+data class ServerModelMetadata(
 
     /**
      * Provides a human readable identifier which describes the contents of a server definition.

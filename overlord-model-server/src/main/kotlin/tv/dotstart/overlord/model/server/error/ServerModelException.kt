@@ -20,10 +20,5 @@ package tv.dotstart.overlord.model.server.error
  * @author [Johannes Donath](mailto:johannesd@torchmind.com)
  * @date 21/04/2020
  */
-class UnsupportedServerDefinitionException(
-    val version: Int,
-    message: String? = null,
-    cause: Throwable? = null) : ServerDefinitionException(message, cause) {
-
-  constructor(version: Int, cause: Throwable) : this(version, null, cause)
-}
+abstract class ServerModelException(message: String?, cause: Throwable?) :
+    Exception(message, cause)

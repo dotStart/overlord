@@ -25,7 +25,7 @@ import org.apache.logging.log4j.LogManager
 import tv.dotstart.overlord.agent.plugin.PluginContext
 import tv.dotstart.overlord.agent.plugin.ServerFactoryContextImpl
 import tv.dotstart.overlord.agent.plugin.getInstances
-import tv.dotstart.overlord.model.server.ServerDefinition
+import tv.dotstart.overlord.model.server.ServerModel
 import tv.dotstart.overlord.plugin.api.server.ServerPlugin
 import tv.dotstart.overlord.plugin.api.repository.Repository
 import tv.dotstart.overlord.plugin.api.repository.getMatching
@@ -161,7 +161,7 @@ object StandaloneAgentCommand : AbstractAgentCommand("standalone", """
     logger.info("Server definition: ${definitionFile.toAbsolutePath()}")
 
     val definition = Files.newBufferedReader(this.definitionFile)
-        .use { ServerDefinition.load(it) }
+        .use { ServerModel.load(it) }
 
     logger.debug("Definition Version: ${definition.version}")
     logger.info(
