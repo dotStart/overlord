@@ -19,6 +19,7 @@ package tv.dotstart.overlord.agent
 import com.github.ajalt.clikt.core.NoOpCliktCommand
 import com.github.ajalt.clikt.core.subcommands
 import com.github.ajalt.clikt.parameters.options.versionOption
+import tv.dotstart.overlord.agent.command.RpcServerAgentCommand
 import tv.dotstart.overlord.agent.command.StandaloneAgentCommand
 import tv.dotstart.overlord.shared.MachineVersion
 
@@ -34,7 +35,8 @@ object OverlordAgent : NoOpCliktCommand(name = "overlord-agent") {
     versionOption(OverlordAgentVersion.version)
 
     subcommands(
-        StandaloneAgentCommand
+        StandaloneAgentCommand,
+        RpcServerAgentCommand
     )
   }
 }
