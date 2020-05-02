@@ -81,6 +81,8 @@
   </dependencies>
 
   <build>
+    <finalName>overlord-agent</finalName>
+
     <resources>
       <resource>
         <directory>${project.basedir}/src/main/resources</directory>
