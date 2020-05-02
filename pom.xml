@@ -60,6 +60,17 @@
       </dependency>
 
       <dependency>
+        <groupId>tv.dotstart.overlord.plugin</groupId>
+        <artifactId>repository-github</artifactId>
+        <version>1.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>tv.dotstart.overlord.plugin</groupId>
+        <artifactId>repository-http</artifactId>
+        <version>1.0-SNAPSHOT</version>
+      </dependency>
+
+      <dependency>
         <groupId>org.jetbrains.kotlin</groupId>
         <artifactId>kotlin-stdlib-jdk8</artifactId>
         <version>${kotlin.version}</version>
@@ -199,6 +210,9 @@
     <module>overlord-plugin-api</module>
 
     <module>overlord-agent</module>
+
+    <module>plugins/repository-github</module>
+    <module>plugins/repository-http</module>
 
     <module>plugins/server-minecraft</module>
   </modules>

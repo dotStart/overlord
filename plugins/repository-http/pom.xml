@@ -21,15 +21,17 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>tv.dotstart.overlord</groupId>
     <artifactId>parent</artifactId>
+    <groupId>tv.dotstart.overlord</groupId>
     <version>1.0-SNAPSHOT</version>
+    <relativePath>../../pom.xml</relativePath>
   </parent>
 
-  <artifactId>agent</artifactId>
+  <groupId>tv.dotstart.overlord.plugin</groupId>
+  <artifactId>repository-http</artifactId>
 
-  <name>Overlord (Agent)</name>
-  <inceptionYear>2018</inceptionYear>
+  <name>Overlord (HTTP Repository Plugin)</name>
+  <inceptionYear>2020</inceptionYear>
 
   <dependencies>
     <dependency>
@@ -42,62 +44,26 @@
     </dependency>
 
     <dependency>
-      <groupId>tv.dotstart.overlord.plugin</groupId>
-      <artifactId>repository-github</artifactId>
-      <version>1.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>tv.dotstart.overlord.plugin</groupId>
-      <artifactId>repository-http</artifactId>
-    </dependency>
-
-    <dependency>
       <groupId>org.jetbrains.kotlin</groupId>
       <artifactId>kotlin-stdlib-jdk8</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>com.github.ajalt</groupId>
-      <artifactId>clikt</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-api</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-core</artifactId>
-    </dependency>
 
     <dependency>
-      <groupId>org.snakeyaml</groupId>
-      <artifactId>snakeyaml-engine</artifactId>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.module</groupId>
+      <artifactId>jackson-module-kotlin</artifactId>
     </dependency>
   </dependencies>
 
   <build>
-    <resources>
-      <resource>
-        <directory>${project.basedir}/src/main/resources</directory>
-        <targetPath>.</targetPath>
-        <filtering>false</filtering>
-
-        <includes>
-          <include>banner.txt</include>
-          <include>log4j2.xml</include>
-        </includes>
-      </resource>
-      <resource>
-        <directory>${project.basedir}/src/main/resources</directory>
-        <targetPath>.</targetPath>
-        <filtering>true</filtering>
-
-        <includes>
-          <include>agent-version.properties</include>
-        </includes>
-      </resource>
-    </resources>
-
     <plugins>
       <plugin>
         <groupId>org.jetbrains.kotlin</groupId>

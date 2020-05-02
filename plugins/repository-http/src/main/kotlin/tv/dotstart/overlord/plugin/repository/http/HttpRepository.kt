@@ -14,8 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tv.dotstart.overlord.plugin.api.repository
+package tv.dotstart.overlord.plugin.repository.http
 
+import tv.dotstart.overlord.plugin.api.repository.Repository
+import tv.dotstart.overlord.plugin.api.repository.stripOverlordScheme
 import tv.dotstart.overlord.shared.util.createHttpClient
 import tv.dotstart.overlord.shared.util.fetchTo
 import tv.dotstart.overlord.shared.util.newHttpRequest

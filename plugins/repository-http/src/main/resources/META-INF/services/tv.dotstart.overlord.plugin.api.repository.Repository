@@ -14,5 +14,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-tv.dotstart.overlord.plugin.api.repository.GitHubRepository
-tv.dotstart.overlord.plugin.api.repository.HttpRepository
+tv.dotstart.overlord.plugin.repository.http.HttpRepository
