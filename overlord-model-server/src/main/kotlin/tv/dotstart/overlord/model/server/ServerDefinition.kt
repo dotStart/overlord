@@ -14,11 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tv.dotstart.overlord.shared.model
+package tv.dotstart.overlord.model.server
 
+import tv.dotstart.overlord.model.server.error.UnsupportedServerDefinitionException
 import tv.dotstart.overlord.shared.mapping.converter.Convert
 import tv.dotstart.overlord.shared.mapping.converter.StringToURIConverter
-import tv.dotstart.overlord.shared.model.error.UnsupportedServerDefinitionException
 import tv.dotstart.overlord.shared.mapping.toObject
 import java.io.Reader
 import java.net.URI

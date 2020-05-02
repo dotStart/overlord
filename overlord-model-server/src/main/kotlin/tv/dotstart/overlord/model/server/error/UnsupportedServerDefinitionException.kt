@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tv.dotstart.overlord.shared.model.error
+package tv.dotstart.overlord.model.server.error
 
 /**
  * @author [Johannes Donath](mailto:johannesd@torchmind.com)

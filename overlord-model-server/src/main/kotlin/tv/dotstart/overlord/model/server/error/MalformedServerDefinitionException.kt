@@ -14,11 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tv.dotstart.overlord.shared.model.error
+package tv.dotstart.overlord.model.server.error
 
 /**
  * @author [Johannes Donath](mailto:johannesd@torchmind.com)
  * @date 21/04/2020
  */
-abstract class ServerDefinitionException(message: String?, cause: Throwable?) :
-    Exception(message, cause)
+class MalformedServerDefinitionException(message: String? = null, cause: Throwable? = null) :
+    ServerDefinitionException(message, cause) {
+
+  constructor(cause: Throwable) : this(null, cause)
+}

@@ -14,23 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tv.dotstart.overlord.shared.model
+package tv.dotstart.overlord.model.server.error
 
 /**
- * Provides human readable metadata for identification purposes.
- *
  * @author [Johannes Donath](mailto:johannesd@torchmind.com)
  * @date 21/04/2020
  */
-data class ServerDefinitionMetadata(
-
-    /**
-     * Provides a human readable identifier which describes the contents of a server definition.
-     */
-    val name: String,
-
-    /**
-     * Provides a human readable identifier which describes the revision of a server definition.
-     */
-    val version: String
-)
+abstract class ServerDefinitionException(message: String?, cause: Throwable?) :
+    Exception(message, cause)
