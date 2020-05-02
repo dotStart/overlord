@@ -14,8 +14,11 @@ service Agent {
    * whether a process remains alive or a single log message.
    *
    * For more information refer to [StateUpdate].
+   *
+   * The agent will immediately start to broadcast events to the client until the input stream is
+   * completed by the client.
    */
-  rpc subscribe (google.protobuf.Empty) returns (stream StateUpdate);
+  rpc subscribe (stream google.protobuf.Empty) returns (stream StateUpdate);
 
   /**
    * Provisions an agent instance with a server plugin and configuration.
