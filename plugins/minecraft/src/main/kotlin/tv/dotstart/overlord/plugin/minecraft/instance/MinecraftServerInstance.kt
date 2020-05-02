@@ -21,10 +21,10 @@ import reactor.core.publisher.Flux
 import reactor.core.publisher.ReplayProcessor
 import tv.dotstart.overlord.plugin.minecraft.config.MinecraftPluginConfiguration
 import tv.dotstart.overlord.shared.delegate.log
-import tv.dotstart.overlord.shared.plugin.server.extensions.Announcing
-import tv.dotstart.overlord.shared.plugin.server.extensions.CommandReceiver
-import tv.dotstart.overlord.shared.plugin.server.instance.ServerFactoryContext
-import tv.dotstart.overlord.shared.plugin.server.instance.ServerInstance
+import tv.dotstart.overlord.plugin.api.server.extensions.Announcing
+import tv.dotstart.overlord.plugin.api.server.extensions.CommandReceiver
+import tv.dotstart.overlord.plugin.api.server.instance.ServerFactoryContext
+import tv.dotstart.overlord.plugin.api.server.instance.ServerInstance
 import tv.dotstart.overlord.shared.util.callingThread
 import tv.dotstart.overlord.shared.util.javaBinary
 import tv.dotstart.overlord.shared.util.lineFlux

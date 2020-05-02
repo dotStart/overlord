@@ -40,6 +40,11 @@
 
     <dependency>
       <groupId>tv.dotstart.overlord</groupId>
+      <artifactId>overlord-plugin-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>tv.dotstart.overlord</groupId>
       <artifactId>overlord-shared</artifactId>
       <scope>provided</scope>
     </dependency>

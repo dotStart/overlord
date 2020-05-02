@@ -17,8 +17,8 @@
 package tv.dotstart.overlord.plugin.minecraft
 
 import tv.dotstart.overlord.plugin.minecraft.instance.MinecraftServerInstanceFactory
-import tv.dotstart.overlord.shared.plugin.server.ServerPlugin
-import tv.dotstart.overlord.shared.plugin.server.instance.ServerFactoryContext
+import tv.dotstart.overlord.plugin.api.server.ServerPlugin
+import tv.dotstart.overlord.plugin.api.server.instance.ServerFactoryContext
 
 /**
  * Provides Overlord integration with vanilla Minecraft servers.

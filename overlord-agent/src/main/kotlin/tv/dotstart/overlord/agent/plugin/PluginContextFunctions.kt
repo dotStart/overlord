@@ -16,7 +16,7 @@
  */
 package tv.dotstart.overlord.agent.plugin
 
-import tv.dotstart.overlord.shared.plugin.Pluggable
+import tv.dotstart.overlord.plugin.api.Pluggable
 
 /**
  * Provides functions which simplify interactions with plugin contexts.

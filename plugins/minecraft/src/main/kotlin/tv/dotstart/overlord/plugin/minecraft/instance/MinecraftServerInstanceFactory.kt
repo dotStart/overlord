@@ -22,9 +22,9 @@ import tv.dotstart.overlord.plugin.minecraft.manifest.VersionManifestIndex
 import tv.dotstart.overlord.plugin.minecraft.manifest.version.VersionSpecification
 import tv.dotstart.overlord.shared.delegate.log
 import tv.dotstart.overlord.shared.mapping.toObject
-import tv.dotstart.overlord.shared.plugin.server.instance.ServerFactoryContext
-import tv.dotstart.overlord.shared.plugin.server.instance.ServerInstance
-import tv.dotstart.overlord.shared.plugin.server.instance.ServerInstanceFactory
+import tv.dotstart.overlord.plugin.api.server.instance.ServerFactoryContext
+import tv.dotstart.overlord.plugin.api.server.instance.ServerInstance
+import tv.dotstart.overlord.plugin.api.server.instance.ServerInstanceFactory
 import tv.dotstart.overlord.shared.util.createObjectMapper
 import java.io.IOException
 import java.nio.file.Files

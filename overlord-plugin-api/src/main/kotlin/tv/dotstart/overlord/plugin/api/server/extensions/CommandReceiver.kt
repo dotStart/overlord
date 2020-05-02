@@ -14,21 +14,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tv.dotstart.overlord.shared.plugin.server.instance
+package tv.dotstart.overlord.plugin.api.server.extensions
+
+import tv.dotstart.overlord.plugin.api.server.instance.ServerInstance
 
 /**
- * Provides integration with a game server implementation.
+ * Specifies an instance which is capable of receiving commands from a user.
  *
  * @author [Johannes Donath](mailto:johannesd@torchmind.com)
- * @date 23/04/2020
+ * @date 28/04/2020
  */
-interface ServerInstanceFactory {
+interface CommandReceiver : ServerInstance {
 
   /**
-   * Provisions a new server instance at the desired location.
+   * Transmits a command for execution.
    *
-   * When invoked, the plugin is expected to prepare the server's cache and data directories for
-   * execution and return a handle with which the server may be re-configured, started and stopped.
+   * The command result will be returned via the server's log stream.
+   *
+   * @throws IllegalStateException when the server is not running.
    */
-  fun createInstance(configuration: Map<String, Any?>): ServerInstance
+  fun sendCommand(command: String)
 }

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tv.dotstart.overlord.shared.plugin.server.instance
+package tv.dotstart.overlord.plugin.api.server.instance
 
 import reactor.core.publisher.Flux
 import java.time.Duration

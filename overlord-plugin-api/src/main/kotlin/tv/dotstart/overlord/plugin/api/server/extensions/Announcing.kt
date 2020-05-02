@@ -14,29 +14,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tv.dotstart.overlord.shared.plugin.server.extensions
+package tv.dotstart.overlord.plugin.api.server.extensions
 
-import tv.dotstart.overlord.shared.plugin.server.instance.ServerInstance
+import tv.dotstart.overlord.plugin.api.server.instance.ServerInstance
 
 /**
- * Represents a server instance which is capable of reloading its configuration on the fly.
- *
- * While all server instances may be initially configured, only some may switch their
- * configuration (or aspects of their configuration) on the fly. This interface acts as a marker for
- * this functionality and exposes the necessary additional functions.
- *
- * Note: When this interface is not implemented by a server instance, the configuration is expected
- * to be changed by restarting the server.
+ * Provides an extension point to server instances which permit broadcasting of messages to their
+ * players in some way shape or form.
  *
  * @author [Johannes Donath](mailto:johannesd@torchmind.com)
  * @date 28/04/2020
  */
-interface Reloadable : ServerInstance {
+interface Announcing : ServerInstance {
 
   /**
-   * Triggers a configuration or plugin reload on a running server instance.
+   * Transmits an announcement to all connected players on the server.
    *
    * @throws IllegalStateException when the server is not running.
    */
-  fun reload()
+  fun announce(message: String)
 }

@@ -26,9 +26,9 @@ import tv.dotstart.overlord.agent.plugin.PluginContext
 import tv.dotstart.overlord.agent.plugin.ServerFactoryContextImpl
 import tv.dotstart.overlord.agent.plugin.getInstances
 import tv.dotstart.overlord.shared.model.ServerDefinition
-import tv.dotstart.overlord.shared.plugin.server.ServerPlugin
-import tv.dotstart.overlord.shared.repository.Repository
-import tv.dotstart.overlord.shared.repository.getMatching
+import tv.dotstart.overlord.plugin.api.server.ServerPlugin
+import tv.dotstart.overlord.plugin.api.repository.Repository
+import tv.dotstart.overlord.plugin.api.repository.getMatching
 import java.net.URI
 import java.nio.file.Files
 import java.nio.file.Path

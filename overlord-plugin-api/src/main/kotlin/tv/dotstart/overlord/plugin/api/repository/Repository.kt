@@ -14,30 +14,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tv.dotstart.overlord.shared.plugin.server.instance
+package tv.dotstart.overlord.plugin.api.repository
 
+import tv.dotstart.overlord.plugin.api.Pluggable
+import java.net.URI
 import java.nio.file.Path
 
 /**
- * Provides contextual information for server plugins.
+ * Provides facilities to retrieve plugins automatically from a
  *
  * @author [Johannes Donath](mailto:johannesd@torchmind.com)
- * @date 23/04/2020
+ * @date 22/04/2020
  */
-interface ServerFactoryContext {
+interface Repository : Pluggable {
 
   /**
-   * Identifies the location at which resources such as executables or results of expensive
-   * calculations may be stored.
+   * Provides a scheme with which compatible plugin URIs are recognized.
    *
-   * Note: Files stored within the server cache are not included in backup archives and must be
-   * restored by the plugin upon startup.
+   * Plugin URIs are provided in the format of "overlord+scheme://plugin-path" in which the
+   * plugin-path is defined by the repository implementation. For instance, the GitHub plugin will
+   * use URIs similar to this: "overlord+github://owner/repository/fileName"
    */
-  val cacheLocation: Path
+  val scheme: String
 
   /**
-   * Identifies the location at which server data (such as user configurations, extensions and save
-   * data) may be stored.
+   * Retrieves a given plugin via this repository.
    */
-  val dataLocation: Path
+  fun fetch(uri: URI, target: Path)
+
+  companion object : Pluggable.Definition<Repository>() {
+    override val type = Repository::class
+  }
 }

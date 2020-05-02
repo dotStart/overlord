@@ -14,11 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tv.dotstart.overlord.shared.plugin.server
+package tv.dotstart.overlord.plugin.api.server
 
-import tv.dotstart.overlord.shared.plugin.Pluggable
-import tv.dotstart.overlord.shared.plugin.server.instance.ServerFactoryContext
-import tv.dotstart.overlord.shared.plugin.server.instance.ServerInstanceFactory
+import tv.dotstart.overlord.plugin.api.Pluggable
+import tv.dotstart.overlord.plugin.api.server.instance.ServerFactoryContext
+import tv.dotstart.overlord.plugin.api.server.instance.ServerInstanceFactory
 
 /**
  * Provides an entry point for plugin integrations.

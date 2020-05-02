@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tv.dotstart.overlord.shared.plugin
+package tv.dotstart.overlord.plugin.api
 
 import tv.dotstart.overlord.shared.util.contextClassLoader
 import java.util.*

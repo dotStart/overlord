@@ -14,23 +14,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tv.dotstart.overlord.shared.plugin.server.extensions
+package tv.dotstart.overlord.plugin.api.server.instance
 
-import tv.dotstart.overlord.shared.plugin.server.instance.ServerInstance
+import java.nio.file.Path
 
 /**
- * Provides an extension point to server instances which permit broadcasting of messages to their
- * players in some way shape or form.
+ * Provides contextual information for server plugins.
  *
  * @author [Johannes Donath](mailto:johannesd@torchmind.com)
- * @date 28/04/2020
+ * @date 23/04/2020
  */
-interface Announcing : ServerInstance {
+interface ServerFactoryContext {
 
   /**
-   * Transmits an announcement to all connected players on the server.
+   * Identifies the location at which resources such as executables or results of expensive
+   * calculations may be stored.
    *
-   * @throws IllegalStateException when the server is not running.
+   * Note: Files stored within the server cache are not included in backup archives and must be
+   * restored by the plugin upon startup.
    */
-  fun announce(message: String)
+  val cacheLocation: Path
+
+  /**
+   * Identifies the location at which server data (such as user configurations, extensions and save
+   * data) may be stored.
+   */
+  val dataLocation: Path
 }

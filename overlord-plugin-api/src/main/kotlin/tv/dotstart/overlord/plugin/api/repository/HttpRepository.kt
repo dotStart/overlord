@@ -14,35 +14,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tv.dotstart.overlord.shared.repository
+package tv.dotstart.overlord.plugin.api.repository
 
-import tv.dotstart.overlord.shared.plugin.Pluggable
+import tv.dotstart.overlord.shared.util.createHttpClient
+import tv.dotstart.overlord.shared.util.fetchTo
+import tv.dotstart.overlord.shared.util.newHttpRequest
 import java.net.URI
 import java.nio.file.Path
 
 /**
- * Provides facilities to retrieve plugins automatically from a
+ * Fetches plugin files from an arbitrary HTTP URI.
  *
  * @author [Johannes Donath](mailto:johannesd@torchmind.com)
- * @date 22/04/2020
+ * @date 29/04/2020
  */
-interface Repository : Pluggable {
+class HttpRepository : Repository {
 
-  /**
-   * Provides a scheme with which compatible plugin URIs are recognized.
-   *
-   * Plugin URIs are provided in the format of "overlord+scheme://plugin-path" in which the
-   * plugin-path is defined by the repository implementation. For instance, the GitHub plugin will
-   * use URIs similar to this: "overlord+github://owner/repository/fileName"
-   */
-  val scheme: String
+  override val scheme = "http"
 
-  /**
-   * Retrieves a given plugin via this repository.
-   */
-  fun fetch(uri: URI, target: Path)
+  override fun fetch(uri: URI, target: Path) {
+    val strippedUri = uri.toASCIIString()
+        .stripOverlordScheme()
 
-  companion object : Pluggable.Definition<Repository>() {
-    override val type = Repository::class
+    val request = newHttpRequest()
+        .GET()
+        .uri(URI.create(strippedUri))
+        .build()
+
+    createHttpClient().fetchTo(request, target)
   }
 }

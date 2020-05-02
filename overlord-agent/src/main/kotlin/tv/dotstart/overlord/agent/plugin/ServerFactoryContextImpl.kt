@@ -16,7 +16,7 @@
  */
 package tv.dotstart.overlord.agent.plugin
 
-import tv.dotstart.overlord.shared.plugin.server.instance.ServerFactoryContext
+import tv.dotstart.overlord.plugin.api.server.instance.ServerFactoryContext
 import java.nio.file.Path
 
 /**
