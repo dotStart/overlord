@@ -44,7 +44,7 @@ import kotlin.system.exitProcess
  * @author [Johannes Donath](mailto:johannesd@torchmind.com)
  * @date 21/04/2020
  */
-object StandaloneAgentCommand : AbstractAgentCommand("standalone", """
+object StandaloneAgentCommand : AbstractExecutionAgentCommand("standalone", """
   Launches a standalone server instance without external oversight.
   
   Note: When launching in standalone mode, server instances will be managed locally by the agent
@@ -84,47 +84,6 @@ object StandaloneAgentCommand : AbstractAgentCommand("standalone", """
       "--accept-eula",
       help = "Accepts a given end user agreement")
       .multiple()
-
-  /**
-   * Identifies the location at which server cache files (such as binaries and results of expensive
-   * computations) are located.
-   */
-  private val cacheLocation by option(
-      "-c", "--cache-location",
-      help = "Location of the server cache")
-      .convert { Paths.get(it) as Path }
-      .defaultLazy { Paths.get("cache") }
-      .validate {
-        require(Files.notExists(it) || Files.isDirectory(it)) { "Illegal cache directory" }
-      }
-
-  /**
-   * Identifies the persistent location at which server data (such as save data and plugins) are
-   * located.
-   */
-  private val dataLocation by option(
-      "-d", "--data-location",
-      help = "Location of the server data")
-      .convert { Paths.get(it) as Path }
-      .defaultLazy { Paths.get("data") }
-      .validate {
-        require(Files.notExists(it) || Files.isDirectory(it)) { "Illegal data directory" }
-      }
-
-  /**
-   * Identifies a location at which additional agent plugins are stored.
-   *
-   * JAR archives from this directory will be loaded upon startup in order to provide additional
-   * support for repositories and other basic functionality.
-   */
-  private val pluginLocation by option(
-      "-p", "--plugin-location",
-      help = "Location of additional agent plugins")
-      .convert { Paths.get(it) as Path }
-      .defaultLazy { Paths.get("plugins") }
-      .validate {
-        require(Files.notExists(it) || Files.isDirectory(it)) { "Illegal plugin directory" }
-      }
 
   /**
    * Overrides the URI of the plugin to be used for managing the server instance.
