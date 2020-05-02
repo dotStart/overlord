@@ -26,7 +26,7 @@
     <version>1.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>agent</artifactId>
+  <artifactId>overlord-agent</artifactId>
 
   <name>Overlord (Agent)</name>
   <inceptionYear>2018</inceptionYear>
