@@ -8,6 +8,15 @@ import "google/protobuf/wrappers.proto";
 service Agent {
 
   /**
+   * Retrieves the current state of the agent at the time of invocation.
+   *
+   * This endpoint is primarily meant for recovery purposes (e.g. when the supervisor has somehow
+   * been restarted in the meantime and re-acquires the state of an agent instance). As such, it
+   * effectively provides an aggregated version of the provision and state update calls.
+   */
+  rpc getStatus (google.protobuf.Empty) returns (AgentState);
+
+  /**
    * Subscribes to a stream of server state updates.
    *
    * Each message within the resulting stream contains basic information on the server such as
@@ -95,6 +104,28 @@ message CallResult {
   bool success = 1;
   uint32 errorCode = 2;
   string errorMessage = 3;
+}
+
+message AgentState {
+
+  /**
+   * Identifies whether the agent has been provisioned with a plugin and server configuration.
+   */
+  bool provisioned = 1;
+
+  /**
+   * Identifies whether the agent is currently running a server instance that has previously been
+   * provisioned.
+   */
+  bool alive = 2;
+
+  /**
+   * Identifies the URI of the plugin which was loaded upon agent provisioning (if any).
+   *
+   * This value will remain unset if a plugin blob is transmitted upon provisioning as the agent is
+   * not aware of the plugin source.
+   */
+  string pluginUri = 3;
 }
 
 message StateUpdate {
