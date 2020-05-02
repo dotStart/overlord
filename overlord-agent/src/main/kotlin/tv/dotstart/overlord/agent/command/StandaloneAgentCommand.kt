@@ -25,16 +25,16 @@ import org.apache.logging.log4j.LogManager
 import tv.dotstart.overlord.agent.plugin.PluginContext
 import tv.dotstart.overlord.agent.plugin.ServerFactoryContextImpl
 import tv.dotstart.overlord.agent.plugin.getInstances
+import tv.dotstart.overlord.agent.util.addShutdownHook
 import tv.dotstart.overlord.model.server.ServerModel
-import tv.dotstart.overlord.plugin.api.server.ServerPlugin
 import tv.dotstart.overlord.plugin.api.repository.Repository
 import tv.dotstart.overlord.plugin.api.repository.getMatching
+import tv.dotstart.overlord.plugin.api.server.ServerPlugin
 import java.net.URI
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 import java.time.Duration
-import kotlin.concurrent.thread
 import kotlin.system.exitProcess
 
 /**
@@ -191,10 +191,10 @@ object StandaloneAgentCommand : AbstractAgentCommand("standalone", """
           ?: throw IllegalStateException("No repository for scheme ${pluginUri.scheme}")
 
       val targetPath = Files.createTempFile("overlord_plugin", "_srv.jar")
-      Runtime.getRuntime().addShutdownHook(thread(name = "delete-plugin", start = false) {
+      addShutdownHook("delete-plugin") {
         logger.info("Deleting server plugin at $targetPath")
         Files.deleteIfExists(targetPath)
-      })
+      }
 
       logger.info("Fetching server plugin")
       repository.fetch(pluginUri, targetPath)
@@ -251,14 +251,14 @@ object StandaloneAgentCommand : AbstractAgentCommand("standalone", """
       logger.info("Starting server")
       instance.start()
 
-      Runtime.getRuntime().addShutdownHook(thread(name = "server-shutdown", start = false) {
+      addShutdownHook("server-shutdown") {
         logger.info("Received shutdown signal - Performing graceful server shutdown")
 
         if (!instance.stop(this.shutdownTimeout)) {
           logger.warn("Shutdown timeout exceeded - Killing server")
           instance.kill()
         }
-      })
+      }
     }
   }
 }
