@@ -39,7 +39,7 @@ service Agent {
    * implementation is expected to completely remove an agent and spawn a new process if a different
    * server instance shall be started in its place.
    */
-  rpc provision (ProvisionRequest) returns (CallResult);
+  rpc provision (ProvisionRequest) returns (google.protobuf.Empty);
 
   /**
    * Adjusts the configuration of a provisioned server plugin.
@@ -48,7 +48,7 @@ service Agent {
    * update the configuration values, [reload] must be invoked (or the server restarted if [reload]
    * is not supported).
    */
-  rpc reconfigure (ConfigurationMap) returns (CallResult);
+  rpc reconfigure (ConfigurationMap) returns (google.protobuf.Empty);
 
   /**
    * Causes a provisioned server instance to be started.
@@ -56,7 +56,7 @@ service Agent {
    * This endpoint is also available if a server instance has been stopped or killed prior to this
    * RPC.
    */
-  rpc start (google.protobuf.Empty) returns (CallResult);
+  rpc start (google.protobuf.Empty) returns (google.protobuf.Empty);
 
   /**
    * Requests a graceful server shutdown.
@@ -65,7 +65,7 @@ service Agent {
    * process has exited) or the given timeout has been exceeded (in which case the agent will
    * respond with an error code indicating such failure).
    */
-  rpc stop (StopRequest) returns (CallResult);
+  rpc stop (StopRequest) returns (google.protobuf.Empty);
 
   /**
    * Requests a forceful server shutdown.
@@ -73,7 +73,7 @@ service Agent {
    * Warning: This RPC may cause loss of data or save data corruption and should only ever be
    * invoked as a last resort in order to shut down the agent in a sensible way.
    */
-  rpc kill (google.protobuf.Empty) returns (CallResult);
+  rpc kill (google.protobuf.Empty) returns (google.protobuf.Empty);
 
   /**
    * Executes a server command.
@@ -81,7 +81,7 @@ service Agent {
    * Note: This endpoint is not supported by all server plugins. Refer to the respective server
    * plugin documentation for more information.
    */
-  rpc executeCommand (google.protobuf.StringValue) returns (CallResult);
+  rpc executeCommand (google.protobuf.StringValue) returns (google.protobuf.Empty);
 
   /**
    * Sends a server-wide announcement to all players.
@@ -89,7 +89,7 @@ service Agent {
    * Note: This endpoint is not supported by all server plugins. Refer to the respective server
    * plugin documentation for more information.
    */
-  rpc announce (google.protobuf.StringValue) returns (CallResult);
+  rpc announce (google.protobuf.StringValue) returns (google.protobuf.Empty);
 
   /**
    * Reloads the server configuration from disk.
@@ -97,13 +97,7 @@ service Agent {
    * Note: This endpoint is not supported by all server plugins. Refers to the respective server
    * plugin documentation for more information.
    */
-  rpc reload (google.protobuf.Empty) returns (CallResult);
-}
-
-message CallResult {
-  bool success = 1;
-  uint32 error_code = 2;
-  string error_message = 3;
+  rpc reload (google.protobuf.Empty) returns (google.protobuf.Empty);
 }
 
 message AgentState {
