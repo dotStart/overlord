@@ -20,6 +20,9 @@ import com.github.ajalt.clikt.parameters.options.convert
 import com.github.ajalt.clikt.parameters.options.defaultLazy
 import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.options.validate
+import tv.dotstart.overlord.agent.plugin.PluginContext
+import tv.dotstart.overlord.agent.plugin.getInstances
+import tv.dotstart.overlord.plugin.api.repository.Repository
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -71,4 +74,28 @@ abstract class AbstractExecutionAgentCommand(name: String, help: String) :
       .validate {
         require(Files.notExists(it) || Files.isDirectory(it)) { "Illegal plugin directory" }
       }
+
+  override fun run() {
+    super.run()
+
+    var repositoryPlugins = Repository.available
+    if (Files.exists(this.pluginLocation)) {
+      StandaloneAgentCommand.logger.info(
+          "Loading plugins from ${StandaloneAgentCommand.pluginLocation}")
+      val plugins = PluginContext.loadAll(this.pluginLocation)
+
+      repositoryPlugins = (repositoryPlugins + plugins.getInstances(Repository))
+          .sortedByDescending { it.priority }
+          .distinctBy { it.scheme }
+
+      StandaloneAgentCommand.logger.debug("Discovered ${repositoryPlugins.size} repository plugins")
+    } else {
+      StandaloneAgentCommand.logger.debug(
+          "Using ${repositoryPlugins.size} standard repository plugins")
+    }
+
+    this.run(repositoryPlugins)
+  }
+
+  protected abstract fun run(repositoryPlugins: List<Repository>)
 }

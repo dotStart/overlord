@@ -24,7 +24,6 @@ import com.github.ajalt.clikt.parameters.options.*
 import org.apache.logging.log4j.LogManager
 import tv.dotstart.overlord.agent.plugin.PluginContext
 import tv.dotstart.overlord.agent.plugin.ServerFactoryContextImpl
-import tv.dotstart.overlord.agent.plugin.getInstances
 import tv.dotstart.overlord.agent.util.addShutdownHook
 import tv.dotstart.overlord.model.server.ServerModel
 import tv.dotstart.overlord.plugin.api.repository.Repository
@@ -114,7 +113,7 @@ object StandaloneAgentCommand : AbstractExecutionAgentCommand("standalone", """
       }
       .defaultLazy { Duration.ofMinutes(1) }
 
-  override fun run() {
+  override fun run(repositoryPlugins: List<Repository>) {
     super.run()
 
     logger.info("Server definition: ${definitionFile.toAbsolutePath()}")
@@ -125,20 +124,6 @@ object StandaloneAgentCommand : AbstractExecutionAgentCommand("standalone", """
     logger.debug("Definition Version: ${definition.version}")
     logger.info(
         "Launching definition \"${definition.metadata.name}\" v${definition.metadata.version}")
-
-    var repositoryPlugins = Repository.available
-    if (Files.exists(this.pluginLocation)) {
-      logger.info("Loading plugins from $pluginLocation")
-      val plugins = PluginContext.loadAll(this.pluginLocation)
-
-      repositoryPlugins = (repositoryPlugins + plugins.getInstances(Repository))
-          .sortedByDescending { it.priority }
-          .distinctBy { it.scheme }
-
-      logger.debug("Discovered ${repositoryPlugins.size} repository plugins")
-    } else {
-      logger.debug("Using ${repositoryPlugins.size} standard repository plugins")
-    }
 
     val pluginUri = this.serverPluginOverride ?: definition.plugin
     logger.info("Server Plugin: $pluginUri")
