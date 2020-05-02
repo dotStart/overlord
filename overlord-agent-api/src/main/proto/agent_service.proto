@@ -39,7 +39,7 @@ service Agent {
    * implementation is expected to completely remove an agent and spawn a new process if a different
    * server instance shall be started in its place.
    */
-  rpc provision (ProvisionRequest) returns (google.protobuf.Empty);
+  rpc provision (ProvisionRequest) returns (ProvisionResponse);
 
   /**
    * Adjusts the configuration of a provisioned server plugin.
@@ -120,6 +120,21 @@ message AgentState {
    * not aware of the plugin source.
    */
   string plugin_uri = 3;
+
+  /**
+   * Identifies the display name of the plugin which is being executed on the agent.
+   */
+  string plugin_display_name = 4;
+
+  /**
+   * Identifies the version number of the plugin which is being executed on the agent.
+   */
+  string plugin_version = 5;
+
+  /**
+   * Identifies a listing of capabilities provided by the server plugin implementation.
+   */
+  repeated ServerInstanceCapability capabilities = 6;
 }
 
 message StateUpdate {
@@ -179,6 +194,29 @@ message ProvisionRequest {
   ConfigurationMap plugin_configuration = 3;
 }
 
+message ProvisionResponse {
+
+  /**
+   * Echoes back the plugin URI of a previous ProvisionRequest.
+   */
+  string plugin_uri = 1;
+
+  /**
+   * Identifies the display name of the plugin which is being executed on the agent.
+   */
+  string plugin_display_name = 2;
+
+  /**
+   * Identifies the version number of the plugin which is being executed on the agent.
+   */
+  string plugin_version = 3;
+
+  /**
+   * Identifies the capabilities provided by the server plugin implementation.
+   */
+  repeated ServerInstanceCapability capabilities = 4;
+}
+
 message StopRequest {
 
   /**
@@ -189,6 +227,12 @@ message StopRequest {
    * are expected to invoke the kill endpoint when appropriate.
    */
   uint64 timeout = 1;
+}
+
+enum ServerInstanceCapability {
+  ANNOUNCEMENTS = 0;
+  COMMAND_EXECUTION = 1;
+  CONFIGURATION_RELOAD = 2;
 }
 
 message ConfigurationMap {
