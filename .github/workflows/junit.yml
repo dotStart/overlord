@@ -11,6 +11,8 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
+      - name: Setup sonarqube
+        uses: warchant/setup-sonar-scanner@v1
       - name: Cache Maven packages
         uses: actions/cache@v1
         with:
@@ -19,3 +21,11 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
       - name: Build with Maven
         run: mvn -B package --file pom.xml
+      - name: Run sonarqube
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: sonar-scanner
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+          -Dsonar.organization=Torchmind
+          -Dsonar.host.url=https://torchmind.com/sonarqube/
+          -Dsonar.projectKey=overlord
