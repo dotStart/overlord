@@ -26,6 +26,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: sonar-scanner
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-          -Dsonar.organization=Torchmind
           -Dsonar.host.url=https://torchmind.com/sonarqube/
           -Dsonar.projectKey=overlord
