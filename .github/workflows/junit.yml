@@ -26,7 +26,7 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
       - name: Build with Maven
-        run: mvn -B package --file pom.xml
+        run: mvn -B -Doverlord.version.suffix=+ci-${{ github.run_number }} package --file pom.xml
       - name: Upload agent jar
         uses: actions/upload-artifact@v1
         if: ${{ matrix.java == '11' }}
