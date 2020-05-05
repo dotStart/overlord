@@ -4,6 +4,7 @@ import com.github.ajalt.clikt.core.NoOpCliktCommand
 import com.github.ajalt.clikt.core.subcommands
 import tv.dotstart.overlord.agent.command.client.ProvisionRpcClientCommand
 import tv.dotstart.overlord.agent.command.client.StartRpcClientCommand
+import tv.dotstart.overlord.agent.command.client.StopRpcClientCommand
 
 /**
  * @author <a href="mailto:johannesd@torchmind.com">Johannes Donath</a>
@@ -21,7 +22,8 @@ object RpcClientCommand : NoOpCliktCommand(
   init {
     subcommands(
         ProvisionRpcClientCommand,
-        StartRpcClientCommand
+        StartRpcClientCommand,
+        StopRpcClientCommand
     )
   }
 }
