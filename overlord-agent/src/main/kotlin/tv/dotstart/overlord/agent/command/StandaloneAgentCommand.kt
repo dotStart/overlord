@@ -114,8 +114,6 @@ object StandaloneAgentCommand : AbstractExecutionAgentCommand("standalone", """
       .defaultLazy { Duration.ofMinutes(1) }
 
   override fun run(repositoryPlugins: List<Repository>) {
-    super.run()
-
     logger.info("Server definition: ${definitionFile.toAbsolutePath()}")
 
     val definition = Files.newBufferedReader(this.definitionFile)
