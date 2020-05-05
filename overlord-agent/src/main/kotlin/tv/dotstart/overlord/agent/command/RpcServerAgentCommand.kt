@@ -20,12 +20,10 @@ import com.github.ajalt.clikt.parameters.arguments.argument
 import com.github.ajalt.clikt.parameters.arguments.convert
 import com.github.ajalt.clikt.parameters.arguments.defaultLazy
 import io.grpc.netty.shaded.io.grpc.netty.NettyServerBuilder
-import io.grpc.netty.shaded.io.netty.channel.unix.DomainSocketAddress
 import tv.dotstart.overlord.agent.plugin.ServerFactoryContextImpl
 import tv.dotstart.overlord.agent.rpc.AgentServiceImpl
+import tv.dotstart.overlord.agent.util.parseSocketAddress
 import tv.dotstart.overlord.plugin.api.repository.Repository
-import java.net.Inet6Address
-import java.net.InetAddress
 import java.net.InetSocketAddress
 
 /**
@@ -68,37 +66,7 @@ object RpcServerAgentCommand : AbstractExecutionAgentCommand(
         configuration may be preferable when the supervisor is executed on the same machine as the
         agent as it provides the least overhead.
         """.trimIndent())
-      .convert { arg ->
-        if (arg.startsWith("unix:")) {
-          DomainSocketAddress(arg.removePrefix("unix:"))
-        } else {
-          val portOffset = arg.lastIndexOf(':')
-
-          val address = when {
-            portOffset > 0 -> arg.substring(0, portOffset)
-            portOffset == 0 -> null
-            else -> arg
-          }
-
-          val port = if (portOffset != -1) {
-            arg.substring(portOffset + 1).toInt(10)
-          } else {
-            defaultPort
-          }
-
-          val resolvedAddress = address?.let {
-            if (it.startsWith("[") && it.endsWith("]")) {
-              Inet6Address.getByName(it.removePrefix("[").removeSuffix("]"))
-            } else {
-              InetAddress.getByName(it)
-            }
-          }
-
-          resolvedAddress
-              ?.let { InetSocketAddress(it, port) }
-              ?: InetSocketAddress(port)
-        }
-      }
+      .convert { parseSocketAddress(it, defaultPort) }
       .defaultLazy { InetSocketAddress(defaultPort) }
 
   override fun run(repositoryPlugins: List<Repository>) {
