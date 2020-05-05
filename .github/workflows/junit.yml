@@ -31,7 +31,7 @@ jobs:
         uses: actions/upload-artifact@v1
         if: ${{ matrix.java == '11' }}
         with:
-          name: overlord-agent.jar
+          name: Overlord Agent
           path: overlord-agent/target/overlord-agent.jar
       - name: Run sonarqube
         if: ${{ matrix.java == '11' }}
