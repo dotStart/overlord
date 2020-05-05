@@ -3,7 +3,7 @@ on: [push]
 
 jobs:
   build:
-    name: maven
+    name: Build & Test
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -27,6 +27,11 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
       - name: Build with Maven
         run: mvn -B package --file pom.xml
+      - name: Upload agent jar
+        uses: actions/upload-artifact@v1
+        with:
+          name: overlord-agent.jar
+          path: overlord-agent/target/overlord-agent.jar
       - name: Run sonarqube
         if: ${{ matrix.java == '11' }}
         env:
