@@ -1,6 +1,8 @@
 Overlord
 ========
 
+![Continous Testing](https://github.com/dotStart/Overlord/workflows/Build/badge.svg)
+
 Quick and simple automated game server deployment.
 
 **This project is under heavy development and will introduce breaking changes without
