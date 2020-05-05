@@ -39,7 +39,7 @@ object ProvisionRpcClientCommand : AbstractRpcClientCommand(
     val agent = AgentGrpc.newBlockingStub(channel)
 
     val definition = Files.newBufferedReader(this.definitionFile)
-        .use(ServerModel::load)
+        .use { ServerModel.load(it) }
 
     println("Transmitting provisioning request for definition $definitionFile")
     val response = agent.provision(definition.toRequest())
