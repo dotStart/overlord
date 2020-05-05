@@ -35,7 +35,7 @@
 
     <overlord.version>${project.version}</overlord.version>
     <overlord.version.suffix/>
-    <overlord.version.scm>git-${buildNumber}</overlord.version.scm>
+    <overlord.version.scm>git-${buildNumberShort}</overlord.version.scm>
     <overlord.channel>develop</overlord.channel>
     <overlord.stable>false</overlord.stable>
 
@@ -196,17 +196,32 @@
         <artifactId>buildnumber-maven-plugin</artifactId>
         <version>1.4</version>
 
-        <configuration>
-          <revisionOnScmFailure>dev</revisionOnScmFailure>
-          <shortRevisionLength>7</shortRevisionLength>
-        </configuration>
-
         <executions>
           <execution>
+            <id>generate-buildnumber</id>
             <phase>validate</phase>
+
             <goals>
               <goal>create</goal>
             </goals>
+
+            <configuration>
+              <revisionOnScmFailure>unknown</revisionOnScmFailure>
+            </configuration>
+          </execution>
+          <execution>
+            <id>generate-buildnumber-short</id>
+            <phase>validate</phase>
+
+            <goals>
+              <goal>create</goal>
+            </goals>
+
+            <configuration>
+              <buildNumberPropertyName>buildNumberShort</buildNumberPropertyName>
+              <revisionOnScmFailure>dev</revisionOnScmFailure>
+              <shortRevisionLength>7</shortRevisionLength>
+            </configuration>
           </execution>
         </executions>
       </plugin>
