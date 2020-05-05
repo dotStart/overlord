@@ -1,0 +1,26 @@
+name: Pull Request Validation
+on: [pull_request]
+
+jobs:
+  build:
+    name: maven
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [11, 12, 13, 14]
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          - fetch-depth: 0 # required for SonarQube
+      - name: Set up JDK ${{ matrix.java }}
+        uses: actions/setup-java@v1
+        with:
+          java-version: ${{ matrix.java }}
+      - name: Cache Maven packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
