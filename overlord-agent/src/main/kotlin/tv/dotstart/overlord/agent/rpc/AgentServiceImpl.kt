@@ -38,6 +38,7 @@ import tv.dotstart.overlord.plugin.api.server.instance.ServerInstance
 import tv.dotstart.overlord.shared.delegate.log
 import java.net.URI
 import java.nio.file.Files
+import java.nio.file.Paths
 import java.nio.file.StandardOpenOption
 import java.time.Duration
 import java.util.concurrent.TimeoutException
@@ -112,32 +113,37 @@ class AgentServiceImpl(
     val pluginUri = request.pluginUri
         ?.let { URI.create(it) }
     val pluginString = request.pluginBlob
-    val pluginPath = Files.createTempFile("overlord_agent", "rpc_server_plugin.jar")
+    val pluginPath = if (pluginUri != null && pluginUri.scheme == "file") {
+      Paths.get(pluginUri)
+    } else {
+      val target = Files.createTempFile("overlord_agent", "rpc_server_plugin.jar")
 
-    when {
-      pluginString != null -> {
-        logger.debug("Writing plugin blob to $pluginPath")
-        Files.newOutputStream(pluginPath, StandardOpenOption.TRUNCATE_EXISTING).use {
-          pluginString.writeTo(it)
+      when {
+        pluginString != null -> {
+          logger.debug("Writing plugin blob to $target")
+          Files.newOutputStream(target, StandardOpenOption.TRUNCATE_EXISTING)
+              .use(pluginString::writeTo)
         }
-      }
-      pluginUri != null -> {
-        logger.debug("Fetching plugin from $pluginUri to $pluginPath")
+        pluginUri != null -> {
+          logger.debug("Fetching plugin from $pluginUri to $target")
 
-        val repository = this.repositories.getMatching(pluginUri)
-        if (repository == null) {
-          logger.error("No compatible repository for plugin URI: $pluginUri")
-          ob.onError(IllegalStateException("No compatible repository for plugin URI: $pluginUri"))
+          val repository = this.repositories.getMatching(pluginUri)
+          if (repository == null) {
+            logger.error("No compatible repository for plugin URI: $pluginUri")
+            ob.onError(IllegalStateException("No compatible repository for plugin URI: $pluginUri"))
+            return
+          }
+
+          repository.fetch(pluginUri, target)
+        }
+        else -> {
+          logger.error("RPC failed to provide plugin blob or URI")
+          ob.onError(IllegalStateException("Failed to provide plugin blob or URI"))
           return
         }
+      }
 
-        repository.fetch(pluginUri, pluginPath)
-      }
-      else -> {
-        logger.error("RPC failed to provide plugin blob or URI")
-        ob.onError(IllegalStateException("Failed to provide plugin blob or URI"))
-        return
-      }
+      target
     }
 
     addShutdownHook("delete-plugin") {
