@@ -35,6 +35,7 @@ jobs:
           path: overlord-agent/target/overlord-agent.jar
       - name: Run sonarqube
         if: ${{ matrix.java == '11' }}
+        continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: sonar-scanner
