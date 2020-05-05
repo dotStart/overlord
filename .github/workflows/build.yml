@@ -1,4 +1,4 @@
-name: Continous Testing
+name: Build
 on: [push]
 
 jobs:
