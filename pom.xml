@@ -196,6 +196,10 @@
         <artifactId>buildnumber-maven-plugin</artifactId>
         <version>1.4</version>
 
+        <configuration>
+          <getRevisionOnlyOnce>true</getRevisionOnlyOnce>
+        </configuration>
+
         <executions>
           <execution>
             <id>generate-buildnumber</id>
