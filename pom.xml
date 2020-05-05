@@ -33,6 +33,8 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
+    <overlord.version>${project.version}</overlord.version>
+    <overlord.version.suffix/>
     <overlord.channel>develop</overlord.channel>
     <overlord.stable>false</overlord.stable>
 
