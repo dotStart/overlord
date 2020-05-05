@@ -1,0 +1,3 @@
+api: overlord-*-api/**
+agent: overlord-agent/**
+model: overlord-model-*/**
