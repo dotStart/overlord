@@ -1,7 +1,10 @@
 Overlord
 ========
 
-![Continous Testing](https://github.com/dotStart/Overlord/workflows/Build/badge.svg)
+![Build Status](https://github.com/dotStart/Overlord/workflows/Build/badge.svg)
+[![Lines of Code](https://torchmind.com/sonarqube/api/project_badges/measure?project=overlord&metric=ncloc)](https://torchmind.com/sonarqube/dashboard?id=overlord)
+[![Quality Gate Status](https://torchmind.com/sonarqube/api/project_badges/measure?project=overlord&metric=alert_status)](https://torchmind.com/sonarqube/dashboard?id=overlord)
+
 
 Quick and simple automated game server deployment.
 
