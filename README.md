@@ -20,6 +20,34 @@ $ java -jar overlord-agent.jar standalone examples/minecraft.yaml
 Most aspects of the definition file are self-explanatory. Refer to the
 [examples](examples) directory for comprehensive configuration examples.
 
+Running in RPC Mode
+-------------------
+
+When executed in RPC mode, the Overlord agent provides you with the ability to remotely
+provision and control a server instance of your choosing.
+
+**Note:** This feature is primarily aimed at developers who wish to leverage the server deployment
+capabilities within an automated environment of their choosing and thus lacks user facing
+documentation. For a full listing of available methods, refer to th
+ [gRPC service definitions](overlord-agent-api/src/main/proto).
+ 
+```shell script
+$ java -jar overlord-agent.jar rpc-server
+```
+
+For maintenance and evaluation purposes, the following RPC client commands are provided as well:
+
+```shell script
+$ java -jar overlord-agent.jar rpc provision examples/minecraft.yaml
+$ java -jar overlord-agent.jar rpc start
+$ java -jar overlord-agent.jar rpc stop
+```
+
+**Note:** The RPC commands are provided as a convenience and do not provide any stability guarantee
+or fancy error handling. If you wish to automate a deployment process, please make use of the
+provided gRPC definitions (these definitions may also be used to generate bindings for languages
+outside of the Java ecosystem).
+
 License
 -------
 
