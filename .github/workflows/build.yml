@@ -33,6 +33,12 @@ jobs:
         with:
           name: Overlord Agent
           path: overlord-agent/target/overlord-agent.jar
+      - name: Upload server jar
+        uses: actions/upload-artifact@v1
+        if: ${{ matrix.java == '11' }}
+        with:
+          name: Overlord Server
+          path: overlord-server/target/overlord-server.jar
       - name: Run sonarqube
         if: ${{ matrix.java == '11' }}
         continue-on-error: true
