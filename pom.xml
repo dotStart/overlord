@@ -21,6 +21,13 @@
 
   <modelVersion>4.0.0</modelVersion>
 
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.3.1.RELEASE</version>
+    <relativePath/>
+  </parent>
+
   <groupId>tv.dotstart.overlord</groupId>
   <artifactId>parent</artifactId>
   <version>1.0-SNAPSHOT</version>
@@ -319,21 +326,6 @@
             </execution>
           </executions>
         </plugin>
-
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-shade-plugin</artifactId>
-          <version>3.2.3</version>
-
-          <executions>
-            <execution>
-              <phase>package</phase>
-              <goals>
-                <goal>shade</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
       </plugins>
     </pluginManagement>
   </build>
@@ -351,5 +343,6 @@
     <module>plugins/repository-http</module>
 
     <module>plugins/server-minecraft</module>
+    <module>overlord-server</module>
   </modules>
 </project>
