@@ -130,6 +130,12 @@
       <plugin>
         <groupId>org.jetbrains.kotlin</groupId>
         <artifactId>kotlin-maven-plugin</artifactId>
+
+        <configuration>
+          <args>
+            <arg>-Xopt-in=kotlin.RequiresOptIn</arg>
+          </args>
+        </configuration>
       </plugin>
 
       <plugin>
