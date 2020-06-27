@@ -54,6 +54,7 @@
     <protobuf.version>3.11.4</protobuf.version>
     <reactor.version>3.3.4.RELEASE</reactor.version>
     <reactor-kotlin.version>1.0.2.RELEASE</reactor-kotlin.version>
+    <xodus-dnq.version>1.4.480</xodus-dnq.version>
   </properties>
 
   <scm>
@@ -181,6 +182,12 @@
         <groupId>com.fasterxml.jackson.module</groupId>
         <artifactId>jackson-module-kotlin</artifactId>
         <version>${jackson.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.jetbrains.xodus</groupId>
+        <artifactId>dnq</artifactId>
+        <version>${xodus-dnq.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
