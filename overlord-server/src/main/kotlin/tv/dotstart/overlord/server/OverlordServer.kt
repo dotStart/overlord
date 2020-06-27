@@ -20,6 +20,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 /**
+ * Provides a bootstrap configuration which will be used as a root for performing Class-Path
+ * scanning.
+ *
  * @author [Johannes Donath](mailto:johannesd@torchmind.com)
  * @date 27/06/2020
  */
