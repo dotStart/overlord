@@ -12,8 +12,8 @@
 
   <artifactId>overlord-server</artifactId>
 
-  <name>Overlord (Agent)</name>
-  <inceptionYear>2018</inceptionYear>
+  <name>Overlord (Server)</name>
+  <inceptionYear>2020</inceptionYear>
 
   <dependencies>
     <dependency>
