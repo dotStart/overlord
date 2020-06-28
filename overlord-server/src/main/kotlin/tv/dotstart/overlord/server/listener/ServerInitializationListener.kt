@@ -16,13 +16,18 @@
  */
 package tv.dotstart.overlord.server.listener
 
+import kotlinx.dnq.query.isEmpty
 import org.springframework.boot.context.event.ApplicationReadyEvent
 import org.springframework.boot.info.BuildProperties
 import org.springframework.context.ApplicationListener
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tv.dotstart.overlord.server.entity.ServerConfiguration
+import tv.dotstart.overlord.server.entity.security.User
 import tv.dotstart.overlord.shared.delegate.log
+import java.security.SecureRandom
+
+const val passwordCharMap = "abcdefghijklmnopqrstuvwxyz0123456789!$%&/=?"
 
 /**
  * Handles successful server startups.
@@ -54,6 +59,38 @@ class ServerInitializationListener(
       }
     } else {
       logger.warn("Build information is unavailable - Application version will not be updated")
+    }
+
+    if (User.all().isEmpty) {
+      val random = SecureRandom()
+      val password = buildString {
+        (0 until 12).forEach {
+          append(passwordCharMap[random.nextInt(passwordCharMap.length)])
+        }
+      }
+
+      val adminUser = User.new {
+        this.name = "admin"
+        this.displayName = "Administrator"
+        this.updatePassword(password)
+      }
+
+      adminUser.auditLog.add(User.AuditLogEntry.new {
+        action = User.AuditAction.CREATED
+      })
+
+      logger.info("")
+      logger.info("")
+      logger.info("An administrator user has been created for initial application configuration")
+      logger.info(
+          "Replacement of the standard username and password is recommended to increase application security")
+      logger.info("")
+      logger.info("Username: admin")
+      logger.info("Password: $password")
+      logger.info("")
+      logger.info("Important: This password will not be printed again")
+      logger.info("")
+      logger.info("")
     }
   }
 }
