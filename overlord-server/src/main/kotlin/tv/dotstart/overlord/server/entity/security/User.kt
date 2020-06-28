@@ -29,7 +29,7 @@ import tv.dotstart.overlord.server.entity.audit.AbstractAuditedEntity
  * @author [Johannes Donath](mailto:johannesd@torchmind.com)
  * @date 28/06/2020
  */
-class User(entity: Entity) : AbstractAuditedEntity<User.AuditAction, User.AuditLogEntry>(
+class User(entity: Entity) : AbstractAuditedEntity<User.AuditLogEntry>(
     AuditLogEntry, entity) {
 
   companion object : XdNaturalEntityType<User>()
