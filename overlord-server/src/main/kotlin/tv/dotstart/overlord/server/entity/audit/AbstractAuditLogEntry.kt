@@ -18,6 +18,7 @@ package tv.dotstart.overlord.server.entity.audit
 
 import jetbrains.exodus.entitystore.Entity
 import kotlinx.dnq.*
+import org.joda.time.DateTime
 import tv.dotstart.overlord.server.entity.security.User
 
 /**
@@ -51,4 +52,8 @@ abstract class AbstractAuditLogEntry<A : XdEnumEntity>(
    * null).
    */
   var user by xdLink0_1(User)
+
+  override fun constructor() {
+    this.createdAt = DateTime.now()
+  }
 }
