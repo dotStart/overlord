@@ -32,9 +32,9 @@ import org.joda.time.DateTime
  * @author [Johannes Donath](mailto:johannesd@torchmind.com)
  * @date 28/06/2020
  */
-abstract class TimestampedEntity(entity: Entity) : XdEntity(entity) {
+abstract class AbstractTimestampedEntity(entity: Entity) : XdEntity(entity) {
 
-  companion object : XdNaturalEntityType<TimestampedEntity>()
+  companion object : XdNaturalEntityType<AbstractTimestampedEntity>()
 
   /**
    * Identifies the date and time at which the entity has been initially created.

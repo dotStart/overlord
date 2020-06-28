@@ -28,11 +28,11 @@ import kotlinx.dnq.xdLink0_N
  * @author [Johannes Donath](mailto:johannesd@torchmind.com)
  * @date 28/06/2020
  */
-abstract class AuditedEntity<A : XdEnumEntity, L : AuditLogEntry<A>>(
+abstract class AbstractAuditedEntity<A : XdEnumEntity, L : AbstractAuditLogEntry<A>>(
     logEntryType: XdNaturalEntityType<L>,
-    entity: Entity) : TimestampedEntity(entity) {
+    entity: Entity) : AbstractTimestampedEntity(entity) {
 
-  companion object : XdNaturalEntityType<AuditedEntity<*, *>>()
+  companion object : XdNaturalEntityType<AbstractAuditedEntity<*, *>>()
 
   /**
    * Provides a coherent audit log which provides a chronological listing of operations applied to

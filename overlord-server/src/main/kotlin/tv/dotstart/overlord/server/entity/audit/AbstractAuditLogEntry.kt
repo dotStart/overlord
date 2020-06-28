@@ -26,11 +26,11 @@ import tv.dotstart.overlord.server.entity.security.User
  * @author [Johannes Donath](mailto:johannesd@torchmind.com)
  * @date 28/06/2020
  */
-abstract class AuditLogEntry<A : XdEnumEntity>(
+abstract class AbstractAuditLogEntry<A : XdEnumEntity>(
     actionType: XdEnumEntityType<A>,
     entity: Entity) : XdEntity(entity) {
 
-  companion object : XdNaturalEntityType<AuditLogEntry<*>>()
+  companion object : XdNaturalEntityType<AbstractAuditLogEntry<*>>()
 
   /**
    * Identifies the type of action which is represented by this particular log entry.
