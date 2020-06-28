@@ -38,7 +38,7 @@ class ServerConfiguration(entity: Entity) : XdEntity(entity) {
   /**
    * Identifies the date and time at which the server has been initially installed.
    */
-  var installedAt by xdRequiredDateTimeProp<ServerConfiguration>()
+  var installedAt by xdRequiredDateTimeProp()
     private set
 
   /**
@@ -50,7 +50,7 @@ class ServerConfiguration(entity: Entity) : XdEntity(entity) {
    * Upon entity creation, this value will be set to null (indicating no previously installed
    * version).
    */
-  var currentVersion by xdStringProp<ServerConfiguration>()
+  var currentVersion by xdStringProp()
 
   companion object : XdSingletonEntityType<ServerConfiguration>() {
     override fun ServerConfiguration.initSingleton() {
