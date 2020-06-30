@@ -64,7 +64,8 @@ class Session(entity: Entity) : AbstractAuditedEntity<Session.AuditLogEntry>(
    * Note: This value may also be used in combination with [expiresAt] to determine the point in
    * time at which the garbage collector is permitted to remove a session from the database.
    */
-  val revokedAt by xdDateTimeProp()
+  var revokedAt by xdDateTimeProp()
+    private set
 
   /**
    * Evaluates whether a given session is valid at the current time.
@@ -82,6 +83,11 @@ class Session(entity: Entity) : AbstractAuditedEntity<Session.AuditLogEntry>(
    */
   fun checkValidity(at: DateTime) =
       this.revokedAt == null && this.expiresAt.isAfter(at)
+
+  fun revoke() {
+    check(this.revokedAt == null) { "Session has already been invalidated" }
+    this.revokedAt = DateTime.now()
+  }
 
   /**
    * Provides a listing of recognized audited actions on session objects.
