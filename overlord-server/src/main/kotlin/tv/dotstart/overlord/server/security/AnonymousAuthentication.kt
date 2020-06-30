@@ -30,7 +30,7 @@ import org.springframework.security.core.GrantedAuthority
  * @author [Johannes Donath](mailto:johannesd@torchmind.com)
  * @date 01/07/2020
  */
-class AnonymousAuthentication : Authentication {
+object AnonymousAuthentication : Authentication {
 
   override fun getName() = "Anonymous"
   override fun getCredentials(): Any? = null
