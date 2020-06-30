@@ -64,7 +64,7 @@ class SecurityConfiguration {
       }
       .authorizeExchange {
         it.pathMatchers("/v1").permitAll()
-        it.pathMatchers("/v1/login").permitAll()
+        it.pathMatchers("/v1/security/login").permitAll()
 
         it.anyExchange().authenticated()
       }
