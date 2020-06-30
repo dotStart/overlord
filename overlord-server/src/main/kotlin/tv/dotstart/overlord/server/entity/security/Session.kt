@@ -84,9 +84,20 @@ class Session(entity: Entity) : AbstractAuditedEntity<Session.AuditLogEntry>(
   fun checkValidity(at: DateTime) =
       this.revokedAt == null && this.expiresAt.isAfter(at)
 
-  fun revoke() {
+  /**
+   * Revokes this session thus preventing further use of its associated token.
+   *
+   * When no user is explicitly passed, the owner is assumed to have revoked the session. If null
+   * is passed, the revocation will be logged as caused by the system instead.
+   */
+  fun revoke(user: User? = this.owner) {
     check(this.revokedAt == null) { "Session has already been invalidated" }
     this.revokedAt = DateTime.now()
+
+    this.auditLog.add(AuditLogEntry.new {
+      this.action = AuditAction.REVOKED
+      this.user = user
+    })
   }
 
   /**
