@@ -29,13 +29,15 @@ import tv.dotstart.overlord.server.model.v1.audit.AuditLogEntry
  */
 data class SessionInfo(
     val id: String,
+    val auditLog: List<AuditLogEntry>,
     val createdAt: DateTime,
-    val expiresAt: DateTime,
-    val auditLog: List<AuditLogEntry>) {
+    val updatedAt: DateTime,
+    val expiresAt: DateTime) {
 
   constructor(entity: Session) : this(
       entity.xdId,
+      entity.auditLog.toList().map(::AuditLogEntry),
       entity.createdAt,
-      entity.expiresAt,
-      entity.auditLog.toList().map(::AuditLogEntry))
+      entity.updatedAt,
+      entity.expiresAt)
 }
