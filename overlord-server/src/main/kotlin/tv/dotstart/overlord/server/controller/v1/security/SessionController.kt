@@ -21,16 +21,15 @@ import kotlinx.dnq.query.firstOrNull
 import kotlinx.dnq.query.query
 import org.joda.time.DateTime
 import org.springframework.transaction.annotation.Transactional
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import tv.dotstart.overlord.server.configuration.properties.SecurityConfigurationProperties
 import tv.dotstart.overlord.server.entity.security.Session
 import tv.dotstart.overlord.server.entity.security.User
 import tv.dotstart.overlord.server.error.security.IllegalCredentialsException
+import tv.dotstart.overlord.server.model.v1.security.SessionInfo
 import tv.dotstart.overlord.server.model.v1.security.SessionToken
 import tv.dotstart.overlord.server.model.v1.security.UserCredentials
+import tv.dotstart.overlord.server.security.session.SessionAuthentication
 
 /**
  * Provides session related endpoints.
@@ -62,5 +61,16 @@ class SessionController(private val securityProperties: SecurityConfigurationPro
     }
 
     return SessionToken(session.secret, session.expiresAt)
+  }
+
+  @GetMapping("/session")
+  @Transactional(readOnly = true)
+  fun sessionInfo(authentication: SessionAuthentication): SessionInfo {
+    val session = authentication.session
+
+    return SessionInfo(
+        session.xdId,
+        session.createdAt,
+        session.expiresAt)
   }
 }
