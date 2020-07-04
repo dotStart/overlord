@@ -20,6 +20,7 @@ import kotlinx.dnq.query.eq
 import kotlinx.dnq.query.firstOrNull
 import kotlinx.dnq.query.query
 import org.joda.time.DateTime
+import org.springframework.http.HttpStatus
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
 import tv.dotstart.overlord.server.configuration.properties.SecurityConfigurationProperties
@@ -75,5 +76,17 @@ class SessionController(private val securityProperties: SecurityConfigurationPro
         session.xdId,
         session.createdAt,
         session.expiresAt)
+  }
+
+  /**
+   * Revokes an existing session.
+   */
+  @DeleteMapping
+  @Transactional
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  fun revokeSession(authentication: SessionAuthentication): Unit {
+    val session = authentication.session
+
+    session.revoke()
   }
 }
