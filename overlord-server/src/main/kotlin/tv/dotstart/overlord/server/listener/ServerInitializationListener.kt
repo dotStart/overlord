@@ -24,6 +24,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tv.dotstart.overlord.server.entity.ServerConfiguration
 import tv.dotstart.overlord.server.entity.security.User
+import tv.dotstart.overlord.server.util.nextString
 import tv.dotstart.overlord.shared.delegate.log
 import java.security.SecureRandom
 
@@ -63,11 +64,7 @@ class ServerInitializationListener(
 
     if (User.all().isEmpty) {
       val random = SecureRandom()
-      val password = buildString {
-        (0 until 12).forEach {
-          append(passwordCharMap[random.nextInt(passwordCharMap.length)])
-        }
-      }
+      val password = random.nextString(12)
 
       val adminUser = User.new {
         this.name = "admin"
