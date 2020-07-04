@@ -63,6 +63,9 @@ class SessionController(private val securityProperties: SecurityConfigurationPro
     return SessionToken(session.secret, session.expiresAt)
   }
 
+  /**
+   * Exposes basic session information.
+   */
   @GetMapping
   @Transactional(readOnly = true)
   fun sessionInfo(authentication: SessionAuthentication): SessionInfo {
