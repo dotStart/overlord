@@ -46,7 +46,7 @@ class Session(entity: Entity) : AbstractAuditedEntity<SessionAuditLogEntry>(enti
    * References the user to which this session was allocated. This information is used primarily
    * to establish permissions within the application and to establish
    */
-  val owner by xdLink1(User)
+  var owner by xdLink1(User)
 
   /**
    * Identifies the date and time at which the session is set to expire.
@@ -55,7 +55,7 @@ class Session(entity: Entity) : AbstractAuditedEntity<SessionAuditLogEntry>(enti
    * is used to authenticate a user's request. As such, sessions expire automatically when not in
    * use.
    */
-  val expiresAt by xdRequiredDateTimeProp()
+  var expiresAt by xdRequiredDateTimeProp()
 
   /**
    * Identifies the date and time at which the session has been revoked by its user.
