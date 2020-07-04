@@ -18,13 +18,15 @@ package tv.dotstart.overlord.server.entity.security.audit
 
 import jetbrains.exodus.entitystore.Entity
 import kotlinx.dnq.XdNaturalEntityType
+import kotlinx.dnq.xdLink1
 import tv.dotstart.overlord.server.entity.audit.AbstractAuditLogEntry
 
 /**
  * Provides a representation for audit log entries.
  */
-class UserAuditLogEntry(entity: Entity) : AbstractAuditLogEntry<UserAuditAction>(
-    UserAuditAction, entity) {
+class UserAuditLogEntry(entity: Entity) : AbstractAuditLogEntry<UserAuditAction>(entity) {
 
   companion object : XdNaturalEntityType<UserAuditLogEntry>()
+
+  override var action by xdLink1(UserAuditAction)
 }

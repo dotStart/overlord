@@ -18,8 +18,7 @@ package tv.dotstart.overlord.server.entity.audit
 
 import jetbrains.exodus.entitystore.Entity
 import kotlinx.dnq.XdNaturalEntityType
-import kotlinx.dnq.link.OnDeletePolicy
-import kotlinx.dnq.xdLink0_N
+import kotlinx.dnq.query.XdMutableQuery
 
 /**
  * Provides a base for entities which maintain a full log of all operations applied to them.
@@ -28,7 +27,6 @@ import kotlinx.dnq.xdLink0_N
  * @date 28/06/2020
  */
 abstract class AbstractAuditedEntity<L : AbstractAuditLogEntry<*>>(
-    logEntryType: XdNaturalEntityType<L>,
     entity: Entity) : AbstractTimestampedEntity(entity) {
 
   companion object : XdNaturalEntityType<AbstractAuditedEntity<*>>()
@@ -37,5 +35,5 @@ abstract class AbstractAuditedEntity<L : AbstractAuditLogEntry<*>>(
    * Provides a coherent audit log which provides a chronological listing of operations applied to
    * this entity.
    */
-  val auditLog by xdLink0_N(logEntryType, onDelete = OnDeletePolicy.CASCADE)
+  abstract val auditLog: XdMutableQuery<L>
 }

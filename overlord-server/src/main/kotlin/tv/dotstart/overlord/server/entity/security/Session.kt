@@ -29,8 +29,7 @@ import java.security.SecureRandom
  * @author [Johannes Donath](mailto:johannesd@torchmind.com)
  * @date 28/06/2020
  */
-class Session(entity: Entity) : AbstractAuditedEntity<SessionAuditLogEntry>(
-    SessionAuditLogEntry, entity) {
+class Session(entity: Entity) : AbstractAuditedEntity<SessionAuditLogEntry>(entity) {
 
   companion object : XdNaturalEntityType<Session>()
 
@@ -77,6 +76,8 @@ class Session(entity: Entity) : AbstractAuditedEntity<SessionAuditLogEntry>(
    */
   val isValid: Boolean
     get() = this.checkValidity(DateTime.now())
+
+  override val auditLog by xdLink0_N(SessionAuditLogEntry)
 
   /**
    * Evaluates the validity of this session at a given time.

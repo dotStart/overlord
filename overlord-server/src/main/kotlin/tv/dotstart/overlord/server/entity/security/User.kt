@@ -17,10 +17,7 @@
 package tv.dotstart.overlord.server.entity.security
 
 import jetbrains.exodus.entitystore.Entity
-import kotlinx.dnq.XdNaturalEntityType
-import kotlinx.dnq.xdBooleanProp
-import kotlinx.dnq.xdRequiredStringProp
-import kotlinx.dnq.xdStringProp
+import kotlinx.dnq.*
 import org.springframework.security.crypto.bcrypt.BCrypt
 import tv.dotstart.overlord.server.entity.audit.AbstractAuditedEntity
 import tv.dotstart.overlord.server.entity.security.audit.UserAuditLogEntry
@@ -32,8 +29,7 @@ import tv.dotstart.overlord.server.entity.security.audit.UserAuditLogEntry
  * @author [Johannes Donath](mailto:johannesd@torchmind.com)
  * @date 28/06/2020
  */
-class User(entity: Entity) : AbstractAuditedEntity<UserAuditLogEntry>(
-    UserAuditLogEntry, entity) {
+class User(entity: Entity) : AbstractAuditedEntity<UserAuditLogEntry>(entity) {
 
   companion object : XdNaturalEntityType<User>()
 
@@ -64,6 +60,8 @@ class User(entity: Entity) : AbstractAuditedEntity<UserAuditLogEntry>(
    * even with their correct password).
    */
   var locked by xdBooleanProp()
+
+  override val auditLog by xdLink0_N(UserAuditLogEntry)
 
   /**
    * Evaluates whether a given password matches the known hashed version of the user password.
