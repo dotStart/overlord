@@ -21,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import reactor.core.publisher.Mono
 import tv.dotstart.overlord.server.entity.ServerConfiguration
 import tv.dotstart.overlord.server.model.v1.SystemInfo
 
@@ -41,8 +40,8 @@ class SystemController(
 
   @GetMapping
   @Transactional(readOnly = true)
-  fun info() = Mono.just(SystemInfo(
+  fun info() = SystemInfo(
       this.buildInfo?.version ?: "0.0.0",
       ServerConfiguration.get().installedAt
-  ))
+  )
 }
