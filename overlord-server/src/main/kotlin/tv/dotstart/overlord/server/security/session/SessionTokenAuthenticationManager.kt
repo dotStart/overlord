@@ -24,6 +24,7 @@ import org.springframework.security.core.Authentication
 import org.springframework.transaction.annotation.Transactional
 import reactor.core.publisher.Mono
 import tv.dotstart.overlord.server.entity.security.Session
+import tv.dotstart.overlord.server.error.security.ExpiredCredentialsException
 import tv.dotstart.overlord.server.security.token.TokenAuthentication
 
 /**
@@ -45,8 +46,9 @@ class SessionTokenAuthenticationManager : ReactiveAuthenticationManager {
         .firstOrNull()
 
     return candidate
+        ?.takeIf(Session::isValid)
         ?.let(::SessionAuthentication)
         ?.let { Mono.just<Authentication>(it) }
-        ?: Mono.empty()
+        ?: Mono.error(ExpiredCredentialsException("Session has expired"))
   }
 }
