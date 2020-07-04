@@ -39,7 +39,8 @@ class Session(entity: Entity) : AbstractAuditedEntity<SessionAuditLogEntry>(enti
    * This value is passed along with all requests created by the frontend in order to establish
    * authentication.
    */
-  val secret by xdRequiredStringProp(unique = true)
+  var secret by xdRequiredStringProp(unique = true)
+    private set
 
   /**
    * References the user to which this session was allocated. This information is used primarily
@@ -78,6 +79,18 @@ class Session(entity: Entity) : AbstractAuditedEntity<SessionAuditLogEntry>(enti
     get() = this.checkValidity(DateTime.now())
 
   override val auditLog by xdLink0_N(SessionAuditLogEntry)
+
+  override fun constructor() {
+    super.constructor()
+
+    this.secret = SecureRandom().nextString(24)
+
+    this.auditLog.add(
+        SessionAuditLogEntry.new {
+          this.action = SessionAuditAction.CREATED
+          this.user = user
+        })
+  }
 
   /**
    * Evaluates the validity of this session at a given time.
