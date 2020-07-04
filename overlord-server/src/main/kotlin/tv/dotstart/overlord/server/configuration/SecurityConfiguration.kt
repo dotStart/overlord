@@ -16,6 +16,7 @@
  */
 package tv.dotstart.overlord.server.configuration
 
+import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpStatus
@@ -28,6 +29,7 @@ import org.springframework.security.web.server.SecurityWebFilterChain
 import org.springframework.security.web.server.authentication.AuthenticationWebFilter
 import org.springframework.security.web.server.authentication.HttpStatusServerEntryPoint
 import org.springframework.security.web.server.authentication.ServerAuthenticationEntryPointFailureHandler
+import tv.dotstart.overlord.server.configuration.properties.SecurityConfigurationProperties
 import tv.dotstart.overlord.server.security.session.SessionTokenAuthenticationManager
 import tv.dotstart.overlord.server.security.token.TokenAuthenticationConverter
 
@@ -41,6 +43,7 @@ import tv.dotstart.overlord.server.security.token.TokenAuthenticationConverter
 @Configuration
 @EnableWebFluxSecurity
 @EnableReactiveMethodSecurity
+@EnableConfigurationProperties(SecurityConfigurationProperties::class)
 class SecurityConfiguration {
 
   @Bean
@@ -64,7 +67,7 @@ class SecurityConfiguration {
       }
       .authorizeExchange {
         it.pathMatchers("/v1").permitAll()
-        it.pathMatchers("/v1/security/login").permitAll()
+        it.pathMatchers("/v1/security/create-session").permitAll()
 
         it.anyExchange().authenticated()
       }
