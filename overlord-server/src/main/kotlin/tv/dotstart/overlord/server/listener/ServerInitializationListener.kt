@@ -24,6 +24,8 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tv.dotstart.overlord.server.entity.ServerConfiguration
 import tv.dotstart.overlord.server.entity.security.User
+import tv.dotstart.overlord.server.entity.security.audit.UserAuditAction
+import tv.dotstart.overlord.server.entity.security.audit.UserAuditLogEntry
 import tv.dotstart.overlord.server.util.nextString
 import tv.dotstart.overlord.shared.delegate.log
 import java.security.SecureRandom
@@ -72,8 +74,9 @@ class ServerInitializationListener(
         this.updatePassword(password)
       }
 
-      adminUser.auditLog.add(User.AuditLogEntry.new {
-        action = User.AuditAction.CREATED
+      adminUser.auditLog.add(
+          UserAuditLogEntry.new {
+        action = UserAuditAction.CREATED
       })
 
       logger.info("")

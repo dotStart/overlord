@@ -17,10 +17,13 @@
 package tv.dotstart.overlord.server.entity.security
 
 import jetbrains.exodus.entitystore.Entity
-import kotlinx.dnq.*
+import kotlinx.dnq.XdNaturalEntityType
+import kotlinx.dnq.xdBooleanProp
+import kotlinx.dnq.xdRequiredStringProp
+import kotlinx.dnq.xdStringProp
 import org.springframework.security.crypto.bcrypt.BCrypt
-import tv.dotstart.overlord.server.entity.audit.AbstractAuditLogEntry
 import tv.dotstart.overlord.server.entity.audit.AbstractAuditedEntity
+import tv.dotstart.overlord.server.entity.security.audit.UserAuditLogEntry
 
 /**
  * Represents a user which has been registered with the system and is able to access the
@@ -29,8 +32,8 @@ import tv.dotstart.overlord.server.entity.audit.AbstractAuditedEntity
  * @author [Johannes Donath](mailto:johannesd@torchmind.com)
  * @date 28/06/2020
  */
-class User(entity: Entity) : AbstractAuditedEntity<User.AuditLogEntry>(
-    AuditLogEntry, entity) {
+class User(entity: Entity) : AbstractAuditedEntity<UserAuditLogEntry>(
+    UserAuditLogEntry, entity) {
 
   companion object : XdNaturalEntityType<User>()
 
@@ -80,28 +83,5 @@ class User(entity: Entity) : AbstractAuditedEntity<User.AuditLogEntry>(
   fun updatePassword(password: String) {
     val salt = BCrypt.gensalt()
     this.passwordHash = BCrypt.hashpw(password, salt)
-  }
-
-  /**
-   * Provides a listing of recognized audited actions on user objects.
-   */
-  class AuditAction(entity: Entity) : XdEnumEntity(entity) {
-
-    companion object : XdEnumEntityType<AuditAction>() {
-      val CREATED by enumField { }
-
-      val PASSWORD_CHANGED by enumField { }
-
-      val LOCKED by enumField { }
-      val UNLOCKED by enumField { }
-    }
-  }
-
-  /**
-   * Provides a representation for audit log entries.
-   */
-  class AuditLogEntry(entity: Entity) : AbstractAuditLogEntry<AuditAction>(AuditAction, entity) {
-
-    companion object : XdNaturalEntityType<AuditLogEntry>()
   }
 }

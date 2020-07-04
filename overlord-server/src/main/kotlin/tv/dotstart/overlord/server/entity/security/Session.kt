@@ -19,15 +19,18 @@ package tv.dotstart.overlord.server.entity.security
 import jetbrains.exodus.entitystore.Entity
 import kotlinx.dnq.*
 import org.joda.time.DateTime
-import tv.dotstart.overlord.server.entity.audit.AbstractAuditLogEntry
 import tv.dotstart.overlord.server.entity.audit.AbstractAuditedEntity
+import tv.dotstart.overlord.server.entity.security.audit.SessionAuditAction
+import tv.dotstart.overlord.server.entity.security.audit.SessionAuditLogEntry
+import tv.dotstart.overlord.server.util.nextString
+import java.security.SecureRandom
 
 /**
  * @author [Johannes Donath](mailto:johannesd@torchmind.com)
  * @date 28/06/2020
  */
-class Session(entity: Entity) : AbstractAuditedEntity<Session.AuditLogEntry>(
-    AuditLogEntry, entity) {
+class Session(entity: Entity) : AbstractAuditedEntity<SessionAuditLogEntry>(
+    SessionAuditLogEntry, entity) {
 
   companion object : XdNaturalEntityType<Session>()
 
@@ -94,28 +97,10 @@ class Session(entity: Entity) : AbstractAuditedEntity<Session.AuditLogEntry>(
     check(this.revokedAt == null) { "Session has already been invalidated" }
     this.revokedAt = DateTime.now()
 
-    this.auditLog.add(AuditLogEntry.new {
-      this.action = AuditAction.REVOKED
-      this.user = user
-    })
-  }
-
-  /**
-   * Provides a listing of recognized audited actions on session objects.
-   */
-  class AuditAction(entity: Entity) : XdEnumEntity(entity) {
-
-    companion object : XdEnumEntityType<AuditAction>() {
-      val CREATED by enumField {}
-      val REVOKED by enumField {}
-    }
-  }
-
-  /**
-   * Provides a representation for session related audit log entries.
-   */
-  class AuditLogEntry(entity: Entity) : AbstractAuditLogEntry<AuditAction>(AuditAction, entity) {
-
-    companion object : XdNaturalEntityType<AuditLogEntry>()
+    this.auditLog.add(
+        SessionAuditLogEntry.new {
+          this.action = SessionAuditAction.REVOKED
+          this.user = user
+        })
   }
 }
