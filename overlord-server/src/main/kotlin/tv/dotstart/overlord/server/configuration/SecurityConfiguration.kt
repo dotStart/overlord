@@ -19,6 +19,7 @@ package tv.dotstart.overlord.server.configuration
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.security.authentication.ReactiveAuthenticationManager
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity
@@ -67,7 +68,7 @@ class SecurityConfiguration {
       }
       .authorizeExchange {
         it.pathMatchers("/v1").permitAll()
-        it.pathMatchers("/v1/security/create-session").permitAll()
+        it.pathMatchers(HttpMethod.PUT, "/v1/security/session").permitAll()
 
         it.anyExchange().authenticated()
       }

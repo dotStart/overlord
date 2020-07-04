@@ -38,14 +38,14 @@ import tv.dotstart.overlord.server.security.session.SessionAuthentication
  * @date 01/07/2020
  */
 @RestController
-@RequestMapping("/v1/security")
+@RequestMapping("/v1/security/session")
 class SessionController(private val securityProperties: SecurityConfigurationProperties) {
 
   /**
    * Allocates a new session for a given user for use with an Overlord compatible client.
    */
+  @PutMapping
   @Transactional
-  @PutMapping("/create-session")
   fun createSession(@RequestBody credentials: UserCredentials): SessionToken {
     val user = User.query(User::name eq credentials.username)
         .firstOrNull()
@@ -63,7 +63,7 @@ class SessionController(private val securityProperties: SecurityConfigurationPro
     return SessionToken(session.secret, session.expiresAt)
   }
 
-  @GetMapping("/session")
+  @GetMapping
   @Transactional(readOnly = true)
   fun sessionInfo(authentication: SessionAuthentication): SessionInfo {
     val session = authentication.session
