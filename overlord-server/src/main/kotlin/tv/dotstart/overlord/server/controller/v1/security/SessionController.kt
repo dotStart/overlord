@@ -72,10 +72,7 @@ class SessionController(private val securityProperties: SecurityConfigurationPro
   fun sessionInfo(authentication: SessionAuthentication): SessionInfo {
     val session = authentication.session
 
-    return SessionInfo(
-        session.xdId,
-        session.createdAt,
-        session.expiresAt)
+    return SessionInfo(session)
   }
 
   /**

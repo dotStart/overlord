@@ -14,28 +14,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tv.dotstart.overlord.server.model.v1.security
+package tv.dotstart.overlord.server.model.v1.audit
 
-import kotlinx.dnq.query.toList
+import kotlinx.dnq.XdEnumEntity
 import org.joda.time.DateTime
-import tv.dotstart.overlord.server.entity.security.Session
-import tv.dotstart.overlord.server.model.v1.audit.AuditLogEntry
+import tv.dotstart.overlord.server.entity.audit.AbstractAuditLogEntry
 
 /**
- * Provides information on a given session.
- *
  * @author [Johannes Donath](mailto:johannesd@torchmind.com)
  * @date 04/07/2020
  */
-data class SessionInfo(
+data class AuditLogEntry(
     val id: String,
+    val action: String,
     val createdAt: DateTime,
-    val expiresAt: DateTime,
-    val auditLog: List<AuditLogEntry>) {
+    val user: String?) {
 
-  constructor(entity: Session) : this(
-      entity.xdId,
-      entity.createdAt,
-      entity.expiresAt,
-      entity.auditLog.toList().map(::AuditLogEntry))
+  constructor(entry: AbstractAuditLogEntry<out XdEnumEntity>) : this(
+      entry.xdId,
+      entry.action.displayName,
+      entry.createdAt,
+      entry.user?.name)
 }
