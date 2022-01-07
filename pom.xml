@@ -51,7 +51,7 @@
     <jackson.version>2.10.3</jackson.version>
     <kotlin.version>1.3.72</kotlin.version>
     <log4j.version>2.13.1</log4j.version>
-    <protobuf.version>3.11.4</protobuf.version>
+    <protobuf.version>3.16.1</protobuf.version>
     <reactor.version>3.3.4.RELEASE</reactor.version>
     <reactor-kotlin.version>1.0.2.RELEASE</reactor-kotlin.version>
     <xodus-dnq.version>1.4.480</xodus-dnq.version>
